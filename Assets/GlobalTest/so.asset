@@ -1,0 +1,97 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-6763921678173531744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dbaa47c2adc09441a98027dba46b8e3, type: 3}
+  m_Name: Node__Node View
+  m_EditorClassIdentifier: 
+  NodeName: Node View
+  NodeSOType: ExtendFrame.ProjectNodeView
+  BelongedGroup: {fileID: 0}
+  PreviousNodes: []
+  NextNodes:
+  - {fileID: -4802860671914630677}
+  - {fileID: 7714788765446917867}
+  Text: 
+  Demands: []
+--- !u!114 &-5529010200004144716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6031328365a71ca40bf1436741148f83, type: 3}
+  m_Name: Group__Group
+  m_EditorClassIdentifier: 
+  Title: Group
+  InGroupNodes:
+  - {fileID: -4802860671914630677}
+  - {fileID: 7714788765446917867}
+--- !u!114 &-4802860671914630677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dbaa47c2adc09441a98027dba46b8e3, type: 3}
+  m_Name: NodeInGroup__Group__3
+  m_EditorClassIdentifier: 
+  NodeName: 3
+  NodeSOType: ExtendFrame.ProjectNodeView
+  BelongedGroup: {fileID: -5529010200004144716}
+  PreviousNodes:
+  - {fileID: -6763921678173531744}
+  NextNodes:
+  - {fileID: 7714788765446917867}
+  Text: 
+  Demands: []
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15d6d5a3c9799fd42a24a31724c3caa8, type: 3}
+  m_Name: so
+  m_EditorClassIdentifier: 
+  UngroupedNodes:
+  - {fileID: -6763921678173531744}
+  Groups:
+  - {fileID: -5529010200004144716}
+--- !u!114 &7714788765446917867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dbaa47c2adc09441a98027dba46b8e3, type: 3}
+  m_Name: NodeInGroup__Group__432
+  m_EditorClassIdentifier: 
+  NodeName: 432
+  NodeSOType: ExtendFrame.ProjectNodeView
+  BelongedGroup: {fileID: -5529010200004144716}
+  PreviousNodes:
+  - {fileID: -4802860671914630677}
+  - {fileID: -6763921678173531744}
+  NextNodes: []
+  Text: 
+  Demands: []

@@ -104,12 +104,20 @@ namespace NSFrame
 			}
 		}
 		private NSNodeViewBase ImportNodeViewData(NSNodeViewDataSO nodeViewData, Dictionary<string, NSPort> ports) {
-			Type type = Type.GetType(nodeViewData.NodeViewType);
+			Type type = GetType(nodeViewData.NodeViewType);
 			NSNodeViewBase nodeView = CreateNodeView(type, nodeViewData.Position, nodeViewData.NodeViewName);
 			nodeViewData.GetInputPort(nodeView, ports);
 			nodeViewData.GetOutputPort(nodeView, ports);
 			nodeViewData.SetNodeView(nodeView);
 			return nodeView;
+		}
+		private Type GetType(string typeName) {
+			foreach (var type in DerivedNodeViewTypes) {
+				if (typeName == type.FullName) {
+					return type;
+				}
+			}
+			return null;
 		}
 		private NSGroupView ImportGroupViewData(NSGroupViewDataSO groupViewData, Dictionary<string, NSPort> ports) {
 			NSGroupView groupView = CreateGroupView(groupViewData.Position, groupViewData.Title);
@@ -144,6 +152,7 @@ namespace NSFrame
 					idToNodeSOs.Add(nodeView1.ID, nodeSO);
 					viewToSOs.Add(nodeView1, nodeSO);
 					graphSO.UngroupedNodes.Add(nodeSO);
+					nodeSO.BelongedGroup = null;
 					AssetDatabase.AddObjectToAsset(nodeSO, graphSO);
 				}
 				else if (element is NSGroupView groupView) {
@@ -160,6 +169,7 @@ namespace NSFrame
 							idToNodeSOs.Add(nodeView2.ID, nodeSO);
 							viewToSOs.Add(nodeView2, nodeSO);
 							groupSO.InGroupNodes.Add(nodeSO);
+							nodeSO.BelongedGroup = groupSO;
 							AssetDatabase.AddObjectToAsset(nodeSO, graphSO);
 						}
 					}
@@ -441,11 +451,13 @@ namespace NSFrame
 		}
 		private void InitDerivedNodeViewTypes() {
 			DerivedNodeViewTypes = new();
-			Type[] types = Assembly.GetExecutingAssembly().GetTypes();
 			Type baseType = typeof(NSNodeViewBase);
-			foreach (Type type in types) {
-				if (type != baseType && baseType.IsAssignableFrom(type)) {
-					DerivedNodeViewTypes.Add(type);
+			foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies()) {
+				Type[] types = assembly.GetTypes();
+				foreach (Type type in types) {
+					if (type != baseType && baseType.IsAssignableFrom(type)) {
+						DerivedNodeViewTypes.Add(type);
+					}
 				}
 			}
 		}

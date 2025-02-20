@@ -17,7 +17,7 @@ namespace NSFrame
 		public TextField NodeNameTF { get; set; }
 		protected NSGraphView _graphView;
 
-		public virtual void Generate(NSGraphView graphView, Type nodeviewType, Vector2 position, string nodeViewName) {
+		public void Generate(NSGraphView graphView, Type nodeviewType, Vector2 position, string nodeViewName) {
 			ID = Guid.NewGuid().ToString();
 			if (string.IsNullOrEmpty(nodeViewName)) {
 				nodeViewName = DEFAULT_NODE_NAME;
@@ -73,16 +73,52 @@ namespace NSFrame
 			// 扩展部分不会自动刷新
 			RefreshExpandedState();
 		}
+		/// <summary>
+		/// 覆写须知：请调用 outputContainer
+		/// </summary>
 		public abstract void DesignOutputContainer();
+		/// <summary>
+		/// 覆写须知：请调用 extensionContainer
+		/// </summary>
 		public abstract void DesignExtensionContainer();
 		
 	  #region Save Methods
 	  	public abstract NSNodeViewDataSO GetEmptyNodeViewDataSO();
-	  	public abstract void SetViewDataSO(NSNodeViewDataSO nodeViewDataSO);
+		protected abstract void SetAdditionalViewDataSO(NSNodeViewDataSO nodeViewDataSO);
+	  	public void SetViewDataSO(NSNodeViewDataSO dataSO) {
+			dataSO.NodeViewName = NodeViewName;
+			dataSO.InputPortID = InputPort.ID;
+			dataSO.Position = GetPosition().position;
+			if (GroupView == null) {
+				dataSO.name = $"Node__{NodeViewName}";
+			} else {
+				dataSO.name = $"NodeInGroup__{GroupView.title}__{NodeViewName}";
+			}
+
+			SetAdditionalViewDataSO(dataSO);
+		}
 	  #endregion
 	  #region Export Methods
 	  	public abstract NSNodeSOBase GetEmptyNodeSO();
-		public abstract void SetNodeSO(NSNodeSOBase nodeSOBase, NSGraphView graphView, Dictionary<string, NSNodeSOBase> nodeSOs);
+		protected abstract void SetAdditionalNodeSO(NSNodeSOBase nodeSOBase, NSGraphView graphView, Dictionary<string, NSNodeSOBase> nodeSOs);
+		public void SetNodeSO(NSNodeSOBase nodeSO, NSGraphView graphView, Dictionary<string, NSNodeSOBase> nodeSOs) {
+			nodeSO.NodeName = NodeViewName;
+			
+			// TODO: 从整个图中寻找会有性能浪费
+			nodeSO.PreviousNodes = new();
+			foreach (var edge in graphView.edges) {
+				if (edge.input.node == this) {
+					nodeSO.PreviousNodes.Add(nodeSOs[(edge.output.node as NSNodeViewBase).ID]);
+				}
+			}
+			if (GroupView == null) {
+				nodeSO.name = $"Node__{NodeViewName}";
+			} else {
+				nodeSO.name = $"NodeInGroup__{GroupView.title}__{NodeViewName}";
+			}
+
+			SetAdditionalNodeSO(nodeSO, graphView, nodeSOs);
+		}
 	  #endregion
 
 	  #region Utility Methods

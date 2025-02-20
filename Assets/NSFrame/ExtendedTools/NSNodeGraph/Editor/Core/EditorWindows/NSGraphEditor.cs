@@ -105,9 +105,11 @@ namespace NSFrame
 	  #region Utility Methods
 		public void EnableSaving() {
 			_saveButton.SetEnabled(true);
+			_exportButton.SetEnabled(true);
 		}
 		public void DisableSaving() {
 			_saveButton.SetEnabled(false);
+			_exportButton.SetEnabled(false);
 		}
 	  #endregion
 	}

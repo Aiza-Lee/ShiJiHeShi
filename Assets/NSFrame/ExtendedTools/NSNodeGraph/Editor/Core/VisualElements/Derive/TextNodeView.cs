@@ -41,7 +41,7 @@ namespace NSFrame
 			return IOUtility.CreateSO<TextNodeViewDataSO>();
 		}
 
-		public override void SetNodeSO(NSNodeSOBase nodeSOBase, NSGraphView graphView, Dictionary<string, NSNodeSOBase> nodeSOs) {
+		protected override void SetAdditionalNodeSO(NSNodeSOBase nodeSOBase, NSGraphView graphView, Dictionary<string, NSNodeSOBase> nodeSOs) {
 			if (nodeSOBase is not TextNodeSO) {
 				Debug.LogError("NS: NodeSO type wrong.");
 				return;
@@ -49,50 +49,27 @@ namespace NSFrame
 
 			var nodeSO = nodeSOBase as TextNodeSO;
 
-			nodeSO.NodeName = NodeViewName;
 			nodeSO.NodeSOType = NodeViewType.FullName;
 			nodeSO.Text = Text;
-			if (GroupView == null) {
-				nodeSO.name = $"Node__{NodeViewName}";
-			}
-			else {
-				nodeSO.name = $"NodeInGroup__{GroupView.title}__{NodeViewName}";
-			}
-
 			nodeSO.NextNodes = new();
-			nodeSO.PreviousNodes = new();
-			// TODO: 从整个图中寻找会有性能浪费
 			foreach (var edge in graphView.edges) {
 				if (edge.output.node == this) {
 					nodeSO.NextNodes.Add(nodeSOs[(edge.input.node as NSNodeViewBase).ID]);
 				}
-				else if (edge.input.node == this) {
-					nodeSO.PreviousNodes.Add(nodeSOs[(edge.output.node as NSNodeViewBase).ID]);
-				}
 			}
 		}
 
-		public override void SetViewDataSO(NSNodeViewDataSO nodeViewDataSO) {
+		protected override void SetAdditionalViewDataSO(NSNodeViewDataSO nodeViewDataSO) {
 			if (nodeViewDataSO is not TextNodeViewDataSO) {
 				Debug.LogError("NS: NodeViewDataSO type wrong.");
 				return;
 			}
-
 			var viewDataSO = nodeViewDataSO as TextNodeViewDataSO;
 
-			viewDataSO.NodeViewName = NodeViewName;
 			viewDataSO.NodeViewType = NodeViewType.FullName;
-			viewDataSO.InputPortID = InputPort.ID;
 			viewDataSO.OutputPortID = OutputPort.ID;
-			viewDataSO.Position = GetPosition().position;
 			viewDataSO.Text = Text;
 
-			if (GroupView == null) {
-				viewDataSO.name = $"Node__{NodeViewName}";
-			}
-			else {
-				viewDataSO.name = $"NodeInGroup__{GroupView.title}__{NodeViewName}";
-			}
 		}
 	}
 }

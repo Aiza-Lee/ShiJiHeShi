@@ -1,0 +1,93 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-6619257355845693781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f6b0ef76b8641545a7dcefa69bd7ddf, type: 3}
+  m_Name: NodeInGroup__Group__Node View
+  m_EditorClassIdentifier: 
+  NodeViewName: Node View
+  NodeViewType: NSFrame.SimpleNodeView
+  Position: {x: 901.3333, y: 312}
+  InputPortID: 79589bb1-a91c-4b0a-9c4a-e4bdade674b7
+  OutputPortID: 389f6973-a5df-48fa-a88f-d64c4435e6fa
+--- !u!114 &-2088108994195376650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f6b0ef76b8641545a7dcefa69bd7ddf, type: 3}
+  m_Name: NodeInGroup__Group__123
+  m_EditorClassIdentifier: 
+  NodeViewName: 123
+  NodeViewType: NSFrame.SimpleNodeView
+  Position: {x: 1042.6666, y: 426.66666}
+  InputPortID: a7f9a371-f98c-455e-ba5a-c3efff083ef7
+  OutputPortID: b60bb6b8-65f6-4f76-8e80-4db03b7666da
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52ec7516d069e8340b4290edc4b80e41, type: 3}
+  m_Name: 123
+  m_EditorClassIdentifier: 
+  UngroupedNodeViewDatas:
+  - {fileID: 4535550096885234368}
+  GroupViewDatas:
+  - {fileID: 1935847905261989860}
+  Edges:
+  - Key: a7f9a371-f98c-455e-ba5a-c3efff083ef7
+    Value: 389f6973-a5df-48fa-a88f-d64c4435e6fa
+  - Key: 0c48c273-08b9-43e4-b5e5-6fd613c584fd
+    Value: b60bb6b8-65f6-4f76-8e80-4db03b7666da
+  - Key: 0c48c273-08b9-43e4-b5e5-6fd613c584fd
+    Value: 389f6973-a5df-48fa-a88f-d64c4435e6fa
+--- !u!114 &1935847905261989860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1c45c74bb933fc4aaff6be6a9f2f112, type: 3}
+  m_Name: Group__Group
+  m_EditorClassIdentifier: 
+  Title: Group
+  Position: {x: 876.0001, y: 253.33337}
+  InGroupNodeViewDatas:
+  - {fileID: -6619257355845693781}
+  - {fileID: -2088108994195376650}
+--- !u!114 &4535550096885234368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f6b0ef76b8641545a7dcefa69bd7ddf, type: 3}
+  m_Name: Node__123
+  m_EditorClassIdentifier: 
+  NodeViewName: 123
+  NodeViewType: NSFrame.SimpleNodeView
+  Position: {x: 1130.6666, y: 316}
+  InputPortID: 0c48c273-08b9-43e4-b5e5-6fd613c584fd
+  OutputPortID: 7ad885f2-3301-4d45-8061-35805b9c6c28

@@ -10,8 +10,7 @@ namespace NSFrame
 		public override void GetOutputPort(NSNodeViewBase nodeView, Dictionary<string, NSPort> ports) {
 			if (nodeView is TextNodeView textNodeView) {
 				ports.Add(OutputPortID, textNodeView.OutputPort);
-			}
-			else {
+			} else {
 				Debug.LogError("NS: Cannot get output port.");
 			}
 		}

@@ -1,8 +1,11 @@
 {
-    "name": "NSFrame.NSNodeGraph.Editor",
+    "name": "ExtendFrame.NSNodeGraph.Editor",
     "rootNamespace": "",
     "references": [
-        "GUID:464512cff768eed4e8a7937fca98a14e"
+        "GUID:f611d6829c375af428f47575298addeb",
+        "GUID:6c2fd64c740d39840892262bf42cefdf",
+        "GUID:464512cff768eed4e8a7937fca98a14e",
+        "GUID:9b5a93ec8f0b36c40903d296bb326f4e"
     ],
     "includePlatforms": [
         "Editor"

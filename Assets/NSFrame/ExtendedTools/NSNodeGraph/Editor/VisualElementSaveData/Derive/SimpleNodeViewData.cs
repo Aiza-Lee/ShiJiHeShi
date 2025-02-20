@@ -9,8 +9,7 @@ namespace NSFrame
 		public override void GetOutputPort(NSNodeViewBase nodeView, Dictionary<string, NSPort> ports) {
 			if (nodeView is SimpleNodeView simpleNodeView) {
 				ports.Add(OutputPortID, simpleNodeView.OutputPort);
-			}
-			else {
+			} else {
 				Debug.LogError("NS: Cannot get output port.");
 			}
 		}

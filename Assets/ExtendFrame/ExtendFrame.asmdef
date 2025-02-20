@@ -1,17 +1,17 @@
 {
-    "name": "NSFrame.NSNodeGraph.Editor",
+    "name": "ExtendFrame",
     "rootNamespace": "",
     "references": [
-        "GUID:464512cff768eed4e8a7937fca98a14e"
+        "GUID:464512cff768eed4e8a7937fca98a14e",
+        "GUID:6c2fd64c740d39840892262bf42cefdf",
+        "GUID:f611d6829c375af428f47575298addeb"
     ],
-    "includePlatforms": [
-        "Editor"
-    ],
+    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],
-    "autoReferenced": false,
+    "autoReferenced": true,
     "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false
