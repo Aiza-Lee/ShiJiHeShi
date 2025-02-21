@@ -5,6 +5,7 @@ namespace BasicLogic
 		Wheat,
 		Water,
 		Iron,
-		Villager
+		Villager,
+		Science
 	}
 }
