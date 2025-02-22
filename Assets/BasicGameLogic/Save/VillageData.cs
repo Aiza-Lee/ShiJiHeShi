@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using NSFrame;
 
 namespace BasicLogic {
 	/// <summary>
@@ -7,6 +8,8 @@ namespace BasicLogic {
 	/// </summary>
 	[Serializable]
 	public class VillageData {
-		public List<IArchitecture> Architectures;
+		public List<ArchData> ArchitectureDatas;
+		public List<VillagerData> VillagerDatas;
+		public List<NSPair<Repository, float>> RepositoryAmounts;
 	}
 }

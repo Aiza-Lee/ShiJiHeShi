@@ -16,7 +16,7 @@ MonoBehaviour:
     m_SettingsList: []
     m_RuntimeSettings: []
   m_AssetVersion: 5
-  m_DefaultVolumeProfile: {fileID: 11400000, guid: bcdee38a5d2e3324baeb4be83f1a1171, type: 2}
+  m_DefaultVolumeProfile: {fileID: 11400000, guid: a3819038460b60e43b4dc9beb97f5519, type: 2}
   m_RenderingLayerNames:
   - Default
   m_ValidRenderingLayers: 1
