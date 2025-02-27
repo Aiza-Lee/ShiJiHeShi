@@ -4,109 +4,115 @@ using UnityEngine;
 
 namespace BasicLogic
 {
-	public enum ArchType {
-		/* 居住 */
-		Cottage, 
-		/* 原始生产 */
-		Farm,
-		LumberMill,
-		Quarry,
-		Mine,
-		Fishery,
-		Well,
-		Windmill,
-		Ochard,
-		/* 存储 */
-		Warehouse,
-		/* 精炼 */
-		Blacksmith,
-		Workshop, 
-		/* 装饰 */
-		Garden,
-		Fountain,
-		Statue,
-		/* 特殊 */
-		Ruins,
-	}
 	public abstract class IArch : MonoBehaviour {
 
-	  #region ArchitectureData
-		public int Level {
-			get => _archData.Level;
-		}
-		public int Layer {
-			get => _archData.Layer;
-		}
-		public int Order {
-			get => _archData.Order;
-		}
-		/// <summary>
-		/// 类似于 GUID 的存在
-		/// </summary>
-		public string ID {
-			get => _archData.ID;
-		}
-	  #endregion
-		[SerializeField] protected ArchData _archData;
-	  
-	  #region ArchitectureConfig
-		public string Name {
-			get => ArchConfig.Name;
-		}
-		public ArchType ArchType {
-			get => ArchConfig.ArchType;
-		}
-		/// <summary>
-		/// 建筑的尺寸 Layers * Orders，默认以右下角为上面 Layer Order 所在的点
-		/// </summary>
-		public NSPair<int, int> Size {
-			get => ArchConfig.Size;
-		}
-		
-		/// <summary>
-		/// Level -> Introduction
-		/// </summary>
-		public List<NSPair<int, string>> Introductions {
-			get => ArchConfig.Introductions;
-		}
-		/// <summary>
-		/// Level -> List<Resitory, ProduceVelocity>
-		/// </summary>
-		public List<NSPair<int, List<NSPair<Repository, float>>>> ProduceVelocities {
-			get => ArchConfig.ProduceVelocities;
-		}
-		/// <summary>
-		/// Level -> List<Resitory, ConsumeVelocity>
-		/// </summary>
-		public List<NSPair<int, List<NSPair<Repository, float>>>> ConsumeVelocities {
-			get => ArchConfig.ConsumeVelocities;
-		}
-		/// <summary>
-		/// Level -> <Repository, VolumeAdd>
-		/// </summary>
-		public List<NSPair<int, List<NSPair<Repository, float>>>> VolumeAdds {
-			get => ArchConfig.VolumeAdds;
-		}
-	  #endregion
-	  	public ArchConfigBase ArchConfig;
+		[Header("挂载")] 
+		public ArchConfigBase Config;
+
+		#region Config Getter
+			public string Name => Config.Name;
+			public int Size => Config.Size;
+			public int Maxcontain => Config.MaxContain;
+			public List<string> Introductions => Config.Introductions;
+			private List<RepoList> _InprodVels;
+			public List<RepoList> InProdVels {
+				get => _InprodVels ??= Config.InherentProduceVelocities.ToFullFill();
+				private set => _InprodVels = value;
+			}
+			private List<RepoList> _InConsVels;
+			public List<RepoList> InConsVels {
+				get => _InConsVels ??= Config.InherentConsumeVelocities.ToFullFill();
+				private set => _InConsVels = value;
+			}
+			private List<RepoList> _PerOneProdVels;
+			public List<RepoList> PerOneProdVels {
+				get => _PerOneProdVels ??= Config.ExtraProduceVelocitiesPerOne.ToFullFill();
+				private set => _PerOneProdVels = value;
+			}
+			private List<RepoList> _PerOneConsVels;
+			public List<RepoList> PerOneConsVels {
+				get => _PerOneConsVels ??= Config.ExtraConsumeVelocitiesPerOne.ToFullFill();
+				private set => _PerOneConsVels = value;
+			}
+			public List<RepoList> VolAdds => Config.VolumeAdds;
+			public RepoList ConstructCost => Config.ConstructCost;
+			public float DeconstructRate => Config.DeconstructRate;
+			public float Repairate => Config.RepairRate;
+			public Animator Animator => Config.Animator;
+		#endregion
+
+		[Header("Informations")]
+		[SerializeField][ReadOnly] protected ArchSaveData _saveData;
+		[SerializeField][ReadOnly] protected List<IVillager> _insideVillagers = new();
+		[SerializeField][ReadOnly] protected RepoList _prodBuffs = new(fillAll: true);
+		[SerializeField][ReadOnly] protected RepoList _consBuffs = new(fillAll: true);
+
+		#region _saveData Getter
+			public int Layer => _saveData.Layer;
+			public int Order => _saveData.Order;
+			public int Level => _saveData.Level;
+			public ArchType ArchType => _saveData.ArchType;
+			public int ArchTypeInt => (int)ArchType;
+		#endregion
+
+		public List<IVillager> InsideVillagers => _insideVillagers;
+		public int InsiderCount => _insideVillagers.Count;
+		public RepoList ProdBuffs => _prodBuffs;
+		public RepoList ConsBuffs => _consBuffs;
 
 		/// <summary>
-		/// 建筑在世界中的坐标
+		/// 从全局游戏配置中实例化Arch的预制体，触发CTOR事件，参数为IArch类型
 		/// </summary>
-		public Vector3 CenterPosition {
-			get {
-				float tmpX = 0;
-				if (Layer % 2 == 0) tmpX += VillageManager.Instance.CellLength * Order;
-				else tmpX += VillageManager.Instance.CellLength * (Order - 0.5f);
+		/// <param name="archSaveData"></param>
+		/// <param name="father">预制体上的IArch脚本。</param>
+		/// <returns></returns>
+		public static IArch LoadArchGO(ArchSaveData archSaveData, Transform father) {
+			var prefab = GameManager.Instance.GameConfig.GetArchPrefab(archSaveData.ArchType);
+			var go = GameObject.Instantiate(prefab, father);
+			if (!go.TryGetComponent<IArch>(out var arch)) {
+				Debug.LogError($"Cannot get component ILayer from perfab of type {archSaveData.ArchType}");
+				return null;
+			}
+			go.name = arch.Config.Name;
+			arch._saveData = archSaveData;
 
-				float tmpZ = VillageManager.Instance.LayerGap * Layer;
+			arch.OnConstruct();
+			return arch;
+		}
 
-				return new(tmpX, 0.0f, tmpZ);
+		public static IArch NewArch(ArchType archType, int layer, int order, int level, Transform father) {
+			var prefab = GameManager.Instance.GameConfig.GetArchPrefab(archType);
+			var go = GameObject.Instantiate(prefab, father);
+			if (!go.TryGetComponent<IArch>(out var arch)) {
+				Debug.LogError($"Cannot get component ILayer from perfab of type {archType}");
+				return null;
+			}
+			go.name = arch.Config.Name;
+			arch._saveData = new(archType, layer, order, level);
+
+			arch.OnConstruct();
+			return arch;
+		}
+
+		/// <summary>
+		/// 向RepositoryManager提供一次资源更新的数据
+		/// </summary>
+		private void UpdateRepo() {
+			if (RepositoryManager.Instance.TickConsume(InConsVels[Level], _consBuffs)) {
+				RepositoryManager.Instance.TickProduce(InProdVels[Level], _prodBuffs);
+			}
+			foreach (var villager in _insideVillagers) {
+				if (RepositoryManager.Instance.TickConsume(PerOneConsVels[Level], _consBuffs, villager.ConsBuffs)) {
+					RepositoryManager.Instance.TickProduce(PerOneProdVels[Level], _prodBuffs, villager.ProdBuffs);
+				}
 			}
 		}
-
-		public abstract void ConstructAt();
-		public abstract void OnConstruct();
-		public abstract void OnDeconstruct();
+		protected virtual void OnConstruct() {
+			EventSystem.Invoke<IArch>("CTOR", this);
+			EventSystem.AddListener("Tick", UpdateRepo);
+		}
+		protected virtual void OnDeconstruct() {
+			EventSystem.RemoveListener("Tick", UpdateRepo);
+		}
 	}
 }

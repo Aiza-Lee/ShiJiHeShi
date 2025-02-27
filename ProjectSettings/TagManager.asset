@@ -41,3 +41,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 2561551809
+    locked: 0
+  - name: Arch
+    uniqueID: 3167311719
+    locked: 0
+  - name: AlwaysTop
+    uniqueID: 2778833191
+    locked: 0

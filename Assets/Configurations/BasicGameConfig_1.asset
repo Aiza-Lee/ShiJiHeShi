@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b7203232cda7b64c9b1bfd6675c9922, type: 3}
+  m_Name: BasicGameConfig_1
+  m_EditorClassIdentifier: 
+  ArchPrefabs:
+  - Key: 0
+    Value: {fileID: 42990976938659487, guid: 13d11edb5a6612349bc92446864abe54, type: 3}
+  LayerPrefabs:
+  - Key: 0
+    Value: {fileID: 6027108390514112321, guid: 5878d12087484da4c90322c23862563f, type: 3}
+  VillagerPrefabs: []
+  TicksOfDay: 500
+  TicksOfNight: 200

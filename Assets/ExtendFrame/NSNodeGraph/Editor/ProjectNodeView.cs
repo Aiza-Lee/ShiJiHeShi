@@ -6,32 +6,36 @@ using System.Linq;
 using System;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using Codice.CM.Common.Merge;
 
 namespace ExtendFrame {
 	public class ProjectNodeView : NSNodeViewBase {
 		public NSPort OutputPort;
-		public string Text;
-		public List<NSPairRef<Repository, ulong>> Demands = new();
-		public TextField TextTF;
+		public string Tag, Text;
+		private readonly List<NSPairRef<Repository, ulong>> _demands = new();
+		private readonly List<NSPairRef<ArchType, int>> _unlocks = new();
+		private readonly List<NSPairRef<ArchType, int>> _buffs = new();
+		public TextField TextTF, TagTF;
 
-		private VisualElement _demandFoldout;
-		private static readonly List<string> _enumNames;
+		private VisualElement _demandFoldout, _unlockFoldout, _buffFoldout;
+		private static readonly List<string> _RepositoryNames, _ArchNames;
 
 		static ProjectNodeView() {
-			_enumNames = Enum.GetNames(typeof(Repository)).ToList();
+			_RepositoryNames = Enum.GetNames(typeof(Repository)).ToList();
+			_ArchNames = Enum.GetNames(typeof(ArchType)).ToList();
 		}
 
 		private void AddNewDemand() {
 			AddDemand(new(Repository.Villager, 0));
 		}
 		public void AddDemand(NSPairRef<Repository, ulong> demand) {
-			Demands.Add(demand);
+			_demands.Add(demand);
 
 			var demandContainer = new VisualElement();
 			demandContainer.style.flexDirection = FlexDirection.Row;
 
 			/* ENUM DROP DOWN */
-			var enumDropDown = new DropdownField("", _enumNames, demand.Key.GetHashCode()) {
+			var enumDropDown = new DropdownField("", _RepositoryNames, demand.Key.GetHashCode()) {
 				value = demand.Key.ToString()
 			};
 			enumDropDown.RegisterValueChangedCallback( evt => {
@@ -47,7 +51,7 @@ namespace ExtendFrame {
 
 			/* DELETE BUTTON */
 			var deleteButton = GraphViewUtility.CreateButton("X", () => {
-				Demands.Remove(demand);
+				_demands.Remove(demand);
 				_demandFoldout.Remove(demandContainer);
 			});
 			deleteButton.style.marginLeft = StyleKeyword.Auto;
@@ -56,26 +60,114 @@ namespace ExtendFrame {
 			_demandFoldout.Add(demandContainer);
 		}
 
+		private void AddNewUnlock() {
+			AddUnlock(new(ArchType.Cottage, 0));
+		}
+		public void AddUnlock(NSPairRef<ArchType, int> unlock) {
+			_unlocks.Add(unlock);
+			var unlockContainer = new VisualElement();
+			unlockContainer.style.flexDirection = FlexDirection.Row;
+
+			/* ENUM DROP DOWN */
+			var enumDropDown = new DropdownField("", _ArchNames, unlock.Key.GetHashCode()) {
+				value = unlock.Key.ToString()
+			};
+			enumDropDown.RegisterValueChangedCallback( evt => {
+				unlock.Key = (ArchType)System.Enum.Parse(typeof(ArchType), evt.newValue);
+			} );
+			unlockContainer.Add(enumDropDown);
+
+			/* NUMBER FIELD */
+			var numField = GraphViewUtility.CreateTextField(unlock.Value.ToString(), null, evt => {
+				unlock.Value = int.Parse(evt.newValue);
+			});
+			unlockContainer.Add(numField);
+
+			/* DELETE BUTTON */
+			var deleteButton = GraphViewUtility.CreateButton("X", () => {
+				_unlocks.Remove(unlock);
+				_unlockFoldout.Remove(unlockContainer);
+			});
+			deleteButton.style.marginLeft = StyleKeyword.Auto;
+			unlockContainer.Add(deleteButton);
+			
+			_unlockFoldout.Add(unlockContainer);
+		}
+
+		private void AddNewBuff() {
+			AddBuff(new(ArchType.Cottage, 0));
+		}
+		public void AddBuff(NSPairRef<ArchType, int> buff) {
+			_buffs.Add(buff);
+			var buffContainer = new VisualElement();
+			buffContainer.style.flexDirection = FlexDirection.Row;
+
+			/* ENUM DROP DOWN */
+			var enumDropDown = new DropdownField("", _ArchNames, buff.Key.GetHashCode()) {
+				value = buff.Key.ToString()
+			};
+			enumDropDown.RegisterValueChangedCallback( evt => {
+				buff.Key = (ArchType)System.Enum.Parse(typeof(ArchType), evt.newValue);
+			} );
+			buffContainer.Add(enumDropDown);
+
+			/* NUMBER FIELD */
+			var numField = GraphViewUtility.CreateTextField(buff.Value.ToString(), null, evt => {
+				buff.Value = int.Parse(evt.newValue);
+			});
+			buffContainer.Add(numField);
+
+			/* DELETE BUTTON */
+			var deleteButton = GraphViewUtility.CreateButton("X", () => {
+				_buffs.Remove(buff);
+				_buffFoldout.Remove(buffContainer);
+			});
+			deleteButton.style.marginLeft = StyleKeyword.Auto;
+			buffContainer.Add(deleteButton);
+			
+			_buffFoldout.Add(buffContainer);
+		}
+
 		public override void DesignExtensionContainer() {
 			var customDataContainer = new VisualElement();
 
+			/* TAG FOLDOUT */
+			var tagFoldout = GraphViewUtility.CreateFoldOut("Tag");
+			TagTF = GraphViewUtility.CreateTextField(Tag, null, evt => { Tag = evt.newValue; });
+			tagFoldout.Add(TagTF);
+			customDataContainer.Add(tagFoldout);
+
 			/* TEXT FOLDOUT */
-			var textFoldout = GraphViewUtility.CreateFoldOut("Text");
-			TextTF = GraphViewUtility.CreateTextField(Text, null, evt => {
-				Text = evt.newValue;
-			});
-			TextTF.AddClasses(
-				"nsframe-nodeview__textfield",
-				"nsframe-nodeview__quote-textfield"
-			);
+			var textFoldout = GraphViewUtility.CreateFoldOut("节点描述");
+			TextTF = GraphViewUtility.CreateTextField(Text, null, evt => { Text = evt.newValue; });
+			// TextTF.AddClasses(
+			// 	"nsframe-nodeview__textfield",
+			// 	"nsframe-nodeview__quote-textfield"
+			// );
+			TextTF.multiline = true;
+			TextTF.style.maxWidth = 400;
+			TextTF.style.whiteSpace = WhiteSpace.Normal;
+			TextTF.Children().First().style.overflow = Overflow.Visible;
 			textFoldout.Add(TextTF);
 			customDataContainer.Add(textFoldout);
 
 			/* DEMAND FOLDOUT */
-			_demandFoldout = GraphViewUtility.CreateFoldOut("Demand");
-			var addButton = GraphViewUtility.CreateButton("Add", AddNewDemand);
+			_demandFoldout = GraphViewUtility.CreateFoldOut("资源需求");
+			var addButton = GraphViewUtility.CreateButton("New Demand", AddNewDemand);
 			_demandFoldout.Add(addButton);
 			customDataContainer.Add(_demandFoldout);
+
+			/* UNLOCK FOLDOUT */
+			_unlockFoldout = GraphViewUtility.CreateFoldOut("解锁建筑");
+			addButton = GraphViewUtility.CreateButton("New Unlock", AddNewUnlock);
+			_unlockFoldout.Add(addButton);
+			customDataContainer.Add(_unlockFoldout);
+
+			/* BUFF FOLDOUT */
+			_buffFoldout = GraphViewUtility.CreateFoldOut("增益效果");
+			addButton = GraphViewUtility.CreateButton("New Buff", AddNewBuff);
+			_buffFoldout.Add(addButton);
+			customDataContainer.Add(_buffFoldout);
 
 			extensionContainer.Add(customDataContainer);
 		}
@@ -101,11 +193,14 @@ namespace ExtendFrame {
 			var nodeSO = nodeSOBase as ProjectNodeSO;
 
 			nodeSO.NodeSOType = NodeViewType.FullName;
+			nodeSO.Tag = Tag;
 			nodeSO.Text = Text;
 			nodeSO.Demands = new();
-			foreach (var demand in Demands) {
-				nodeSO.Demands.Add(new NSPair<Repository, ulong>(demand.Key, demand.Value));
-			}
+			foreach (var demand in _demands) { nodeSO.Demands.Add(demand.ToNSPair()); }
+			nodeSO.Unlocks = new();
+			foreach (var unlock in _unlocks) { nodeSO.Unlocks.Add(unlock.ToNSPair()); }
+			nodeSO.Buffs = new();
+			foreach (var buff in _buffs) { nodeSO.Buffs.Add(buff.ToNSPair()); }
 			nodeSO.NextNodes = new();
 			foreach (var edge in graphView.edges) {
 				if (edge.output.node == this) {
@@ -123,11 +218,14 @@ namespace ExtendFrame {
 
 			viewDataSO.NodeViewType = NodeViewType.FullName;
 			viewDataSO.OutputPortID = OutputPort.ID;
+			viewDataSO.Tag = Tag;
 			viewDataSO.Text = Text;
 			viewDataSO.Demands = new();
-			foreach (var demand in Demands) {
-				viewDataSO.Demands.Add(demand.ToNSPair());
-			}
+			foreach (var demand in _demands) { viewDataSO.Demands.Add(demand.ToNSPair()); }
+			viewDataSO.Unlocks = new();
+			foreach (var unlock in _unlocks) { viewDataSO.Unlocks.Add(unlock.ToNSPair()); }
+			viewDataSO.Buffs = new();
+			foreach (var buff in _buffs) { viewDataSO.Buffs.Add(buff.ToNSPair()); }
 		}
 	}
 }

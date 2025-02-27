@@ -1,26 +1,63 @@
 using System.Collections.Generic;
-using NSFrame;
 using UnityEngine;
 
-namespace BasicLogic {
-	[CreateAssetMenu(menuName = "ShiJiHeShi/BasicGameConfig")]
+namespace BasicLogic 
+{
+	[CreateAssetMenu(menuName = "ShiJiHeShi/Config/BasicGame Config")]
 	public class BasicGameConfig : ScriptableObject {
-		/// <summary>
-		/// 为每一种建筑选择 prefab
-		/// </summary>
-		public List<NSPair<ArchType, GameObject>> ArchPrefabs;	
 
+		public List<KVPair<ArchType, GameObject>> ArchPrefabs = new();	
+		public List<KVPair<LayerType, GameObject>> LayerPrefabs = new();	
+		public List<GameObject> VillagerPrefabs = new();
+
+		[Space][Space]
+
+		[Tooltip("白天的时间")] public int TicksOfDay;
+		[Tooltip("夜晚的时间")] public int TicksOfNight;
+
+		public BasicGameConfig() {
+			for (int i = 0; i < GameManager.ArchSize; ++i) ArchPrefabs.Add(new((ArchType)i, null));
+			for (int i = 0; i < GameManager.LayerSize; ++i) LayerPrefabs.Add(new((LayerType)i, null));
+		}
+		
 		/// <summary>
-		/// 根据建筑类型获得建筑的预制体
+		/// 获取建Arch的prefab
 		/// </summary>
-		/// <param name="archType">建筑类型</param>
-		public GameObject GetPrefab(ArchType archType) {
-			for (int i = 0; i < ArchPrefabs.Count; ++i) {
+		/// <param name="archType"></param>
+		/// <returns></returns>
+		public GameObject GetArchPrefab(ArchType archType) {
+			for (var i = 0; i < ArchPrefabs.Count; ++i) {
 				if (ArchPrefabs[i].Key == archType) {
 					return ArchPrefabs[i].Value;
 				}
 			}
+			Debug.LogWarning($"{archType} has no matched prefab.");
 			return null;
 		}
+		
+		/// <summary>
+		/// 获取Layer的prefab
+		/// </summary>
+		/// <param name="layerType"></param>
+		/// <returns></returns>
+		public GameObject GetLayerPrefab(LayerType layerType) {
+			for (var i = 0; i < LayerPrefabs.Count; ++i) {
+				if (LayerPrefabs[i].Key == layerType) {
+					return LayerPrefabs[i].Value;
+				}
+			}
+			Debug.LogWarning($"{layerType} has no matched prefab.");
+			return null;
+		}
+
+		/// <summary>
+		/// 获取Villager的prefab
+		/// </summary>
+		/// <param name="ID"></param>
+		/// <returns></returns>
+		public GameObject GetVillagerPrefab(string ID = "这里我还没有写") {
+			return VillagerPrefabs.Count == 0 ? null : VillagerPrefabs[0];
+		}
+		
 	}
 }

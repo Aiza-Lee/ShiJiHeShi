@@ -7,6 +7,6 @@ namespace BasicLogic
 		Iron,
 		Meat,
 		Villager,
-		Science
+		Science,
 	}
 }
