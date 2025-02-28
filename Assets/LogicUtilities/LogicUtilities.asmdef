@@ -1,9 +1,9 @@
 {
-    "name": "BasicGameLogic",
+    "name": "LogicUtilities",
     "rootNamespace": "",
     "references": [
         "GUID:464512cff768eed4e8a7937fca98a14e",
-        "GUID:8f13c194bbbb70b499c43e13b6173c4e"
+        "GUID:516a5277b8c3b4f4c8cc86b77b1591ff"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

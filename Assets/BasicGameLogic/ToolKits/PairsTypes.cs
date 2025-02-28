@@ -4,33 +4,33 @@ using UnityEngine;
 namespace BasicLogic 
 {
 	[System.Serializable] public class RepoList {
-		public List<RTPair<float>> List;
-		public int Count => List.Count;
+		public List<RTPair<float>> RList;
+		public int Count => RList.Count;
 
 		public bool Full { get; private set; }
 
 		public RepoList(bool fillAll = false) {
-			List = new();
+			RList = new();
 			if (fillAll) {
 				Full = true;
 				for (int i = 0; i < GameManager.RepositorySize; ++i) 
-					List.Add(new((Repository)i, 0));
+					RList.Add(new((Repository)i, 0));
 			}
 		}
 		/// <summary>
 		/// 从不完整的RepoList中创建完整的RepoList
 		/// </summary>
 		public RepoList(RepoList other) {
-			List = new();
+			RList = new();
 			if (other.Full) {
-				for (int i = 0; i < GameManager.RepositorySize; ++i) List.Add(other[i]);
+				for (int i = 0; i < GameManager.RepositorySize; ++i) RList.Add(other[i]);
 				return;
 			}
 			Full = true;
 			for (int i = 0; i < GameManager.RepositorySize; ++i) 
-				List.Add(new((Repository)i, 0));
-			for (int i = 0; i < other.List.Count; ++i) {
-				Add(other.List[i]);
+				RList.Add(new((Repository)i, 0));
+			for (int i = 0; i < other.RList.Count; ++i) {
+				Add(other.RList[i]);
 			}
 		}
 		public RTPair<float> this[int index] {
@@ -38,18 +38,18 @@ namespace BasicLogic
 				if (!Full) {
 					Debug.LogWarning("Donnot use index when list is not full.");
 				}
-				return List[index];
+				return RList[index];
 			}
-			set => List[index] = value;
+			set => RList[index] = value;
 		}
 		public RepoList Add(Repository repository, float val) {
-			foreach(var rtpair in List) {
+			foreach(var rtpair in RList) {
 				if (rtpair.RepositoryType == repository) {
 					rtpair.Value += val;
 					return this;
 				}
 			}
-			List.Add(new(repository, val));
+			RList.Add(new(repository, val));
 			return this;
 		}
 		public RepoList Add(RTPair<float> rtPair) {

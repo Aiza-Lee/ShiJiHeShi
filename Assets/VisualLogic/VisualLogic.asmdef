@@ -1,9 +1,11 @@
 {
-    "name": "BasicGameLogic",
+    "name": "VisualLogic",
     "rootNamespace": "",
     "references": [
+        "GUID:6c2fd64c740d39840892262bf42cefdf",
         "GUID:464512cff768eed4e8a7937fca98a14e",
-        "GUID:8f13c194bbbb70b499c43e13b6173c4e"
+        "GUID:8f13c194bbbb70b499c43e13b6173c4e",
+        "GUID:516a5277b8c3b4f4c8cc86b77b1591ff"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

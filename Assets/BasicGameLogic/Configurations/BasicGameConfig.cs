@@ -14,6 +14,10 @@ namespace BasicLogic
 
 		[Tooltip("白天的时间")] public int TicksOfDay;
 		[Tooltip("夜晚的时间")] public int TicksOfNight;
+		[Tooltip("每层长度")] public int MaxContainPerLayer;
+		[Tooltip("一共多少层")] public int MaxLayerAmount;
+
+		public int MaxLayerRadius => (MaxLayerAmount - 1) / 2;
 
 		public BasicGameConfig() {
 			for (int i = 0; i < GameManager.ArchSize; ++i) ArchPrefabs.Add(new((ArchType)i, null));
@@ -55,7 +59,7 @@ namespace BasicLogic
 		/// </summary>
 		/// <param name="ID"></param>
 		/// <returns></returns>
-		public GameObject GetVillagerPrefab(string ID = "这里我还没有写") {
+		public GameObject GetVillagerPrefab(string ID = "Todo:") {
 			return VillagerPrefabs.Count == 0 ? null : VillagerPrefabs[0];
 		}
 		

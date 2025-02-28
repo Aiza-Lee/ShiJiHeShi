@@ -1,0 +1,114 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd6036bfc1f4fe54c9cce64296154cd7, type: 3}
+  m_Name: PredefinedWorldConfig01
+  m_EditorClassIdentifier: 
+  PresetName: "\u6D4B\u8BD5\u4E16\u754C\u914D\u7F6E01"
+  GameSaveData:
+    SavedLayers:
+    - ID: 
+      LayerType: 0
+      Layer: -1
+      InLayerArches:
+      - ID: 
+        Layer: -1
+        Order: 0
+        Level: 0
+        ArchType: 0
+      - ID: 
+        Layer: -1
+        Order: 1
+        Level: 0
+        ArchType: 0
+    - ID: 
+      LayerType: 0
+      Layer: 0
+      InLayerArches:
+      - ID: 
+        Layer: 0
+        Order: -1
+        Level: 0
+        ArchType: 0
+      - ID: 
+        Layer: 0
+        Order: -2
+        Level: 0
+        ArchType: 0
+      - ID: 
+        Layer: 0
+        Order: -3
+        Level: 0
+        ArchType: 0
+      - ID: 
+        Layer: 0
+        Order: 1
+        Level: 0
+        ArchType: 0
+    - ID: 
+      LayerType: 1
+      Layer: 1
+      InLayerArches:
+      - ID: 
+        Layer: 1
+        Order: 3
+        Level: 0
+        ArchType: 0
+      - ID: 
+        Layer: 1
+        Order: 4
+        Level: 0
+        ArchType: 0
+    - ID: 
+      LayerType: 0
+      Layer: 2
+      InLayerArches:
+      - ID: 
+        Layer: 2
+        Order: 3
+        Level: 0
+        ArchType: 0
+      - ID: 
+        Layer: 2
+        Order: -1
+        Level: 0
+        ArchType: 0
+    - ID: 
+      LayerType: 1
+      Layer: 3
+      InLayerArches:
+      - ID: 
+        Layer: 3
+        Order: -2
+        Level: 0
+        ArchType: 0
+      - ID: 
+        Layer: 3
+        Order: -4
+        Level: 0
+        ArchType: 0
+    SavedVillagers: []
+    SavedRepositoryAmounts:
+      RList:
+      - RepositoryType: 0
+        Value: 1664409.1
+      - RepositoryType: 1
+        Value: 114514
+      - RepositoryType: 2
+        Value: 114514
+      - RepositoryType: 3
+        Value: 114514
+      - RepositoryType: 4
+        Value: 114514
+      - RepositoryType: 5
+        Value: 114514
+      - RepositoryType: 6
+        Value: 114514

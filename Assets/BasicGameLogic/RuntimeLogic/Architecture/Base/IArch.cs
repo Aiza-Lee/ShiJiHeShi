@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using LogicUtilities;
 using NSFrame;
 using UnityEngine;
+using UnityEngine.U2D;
 
 namespace BasicLogic
 {
@@ -8,6 +10,7 @@ namespace BasicLogic
 
 		[Header("挂载")] 
 		public ArchConfigBase Config;
+		public List<Light2DBase> Light2Ds;
 
 		#region Config Getter
 			public string Name => Config.Name;
@@ -60,6 +63,8 @@ namespace BasicLogic
 		public RepoList ProdBuffs => _prodBuffs;
 		public RepoList ConsBuffs => _consBuffs;
 
+		public SpriteRenderer SpriteRenderer { get; private set; }
+
 		/// <summary>
 		/// 从全局游戏配置中实例化Arch的预制体，触发CTOR事件，参数为IArch类型
 		/// </summary>
@@ -108,6 +113,7 @@ namespace BasicLogic
 			}
 		}
 		protected virtual void OnConstruct() {
+			SpriteRenderer = GetComponent<SpriteRenderer>();
 			EventSystem.Invoke<IArch>("CTOR", this);
 			EventSystem.AddListener("Tick", UpdateRepo);
 		}

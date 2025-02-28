@@ -12,6 +12,8 @@ TagManager:
   - Water
   - UI
   - 
+  - Background
+  - Layer
   - 
   - 
   - 
@@ -25,7 +27,6 @@ TagManager:
   - 
   - 
   - 
-  - Post Process
   - 
   - 
   - 
@@ -35,8 +36,7 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - PostProcess
   m_SortingLayers:
   - name: Default
     uniqueID: 0
@@ -44,7 +44,67 @@ TagManager:
   - name: Background
     uniqueID: 2561551809
     locked: 0
-  - name: Arch
+  - name: m_Layer20
+    uniqueID: 1610449109
+    locked: 0
+  - name: m_Layer19
+    uniqueID: 3719950305
+    locked: 0
+  - name: m_Layer18
+    uniqueID: 686424623
+    locked: 0
+  - name: m_Layer17
+    uniqueID: 1184581721
+    locked: 0
+  - name: m_Layer16
+    uniqueID: 4220364713
+    locked: 0
+  - name: m_Layer15
+    uniqueID: 2059427723
+    locked: 0
+  - name: m_Layer14
+    uniqueID: 2159185427
+    locked: 0
+  - name: m_Layer13
+    uniqueID: 257741069
+    locked: 0
+  - name: m_Layer12
+    uniqueID: 4053628779
+    locked: 0
+  - name: m_Layer11
+    uniqueID: 1279729351
+    locked: 0
+  - name: m_Layer10
+    uniqueID: 2241036685
+    locked: 0
+  - name: m_Layer9
+    uniqueID: 1506317741
+    locked: 0
+  - name: m_Layer8
+    uniqueID: 72971727
+    locked: 0
+  - name: m_Layer7
+    uniqueID: 116392533
+    locked: 0
+  - name: m_Layer6
+    uniqueID: 2458993685
+    locked: 0
+  - name: m_Layer5
+    uniqueID: 3643123823
+    locked: 0
+  - name: m_Layer4
+    uniqueID: 3719901775
+    locked: 0
+  - name: m_Layer3
+    uniqueID: 928238289
+    locked: 0
+  - name: m_Layer2
+    uniqueID: 2633544815
+    locked: 0
+  - name: m_Layer1
+    uniqueID: 3718492051
+    locked: 0
+  - name: m_Layer0
     uniqueID: 3167311719
     locked: 0
   - name: AlwaysTop

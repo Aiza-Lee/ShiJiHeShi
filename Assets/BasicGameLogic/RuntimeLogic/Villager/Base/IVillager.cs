@@ -1,8 +1,10 @@
+using LogicUtilities;
 using UnityEngine;
 
 namespace BasicLogic 
 {
 	public abstract class IVillager : MonoBehaviour {
+		
 		[Header("挂载")]
 		public VillagerConfigBase Config;
 

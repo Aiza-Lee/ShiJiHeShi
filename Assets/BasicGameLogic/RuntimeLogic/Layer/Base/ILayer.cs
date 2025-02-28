@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using LogicUtilities;
 using NSFrame;
 using UnityEngine;
 
@@ -18,6 +19,11 @@ namespace BasicLogic
 
 		public List<IArch> InLayerArches => _inLayerArches;
 
+		public SmoothMove SmoothMove { get; private set; }
+		public SmoothScale SmoothScale { get; private set; }
+		public LerpMove LerpMove { get; private set; }
+		public SpriteRenderer SpriteRenderer { get; private set; }
+
 		/// <summary>
 		/// 从全局游戏配置中实例化Layer的预制体
 		/// </summary>
@@ -32,6 +38,8 @@ namespace BasicLogic
 			go.name = layer.Config.Name;
 			layer._saveData = layerSaveData;
 			layerSaveData.InLayerArches?.ForEach( (archData) => layer._inLayerArches.Add(IArch.LoadArchGO(archData, layer.transform)) );
+
+			layer.OnConstruct();
 			return layer;
 		}
 
@@ -50,6 +58,10 @@ namespace BasicLogic
 		}
 
 		protected void OnConstruct() {
+			SmoothMove = GetComponent<SmoothMove>();
+			SmoothScale = GetComponent<SmoothScale>();
+			LerpMove = GetComponent<LerpMove>();
+			SpriteRenderer = GetComponent<SpriteRenderer>();
 			EventSystem.Invoke<ILayer>("LayerCTOR", this);
 		}
 

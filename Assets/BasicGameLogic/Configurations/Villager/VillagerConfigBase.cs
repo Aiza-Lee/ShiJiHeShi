@@ -1,25 +1,13 @@
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace BasicLogic {
+namespace BasicLogic 
+{
 	[CreateAssetMenu(fileName = "VillagerConfigBase", menuName = "ShiJiHeShi/Config/Villager Config")]
 	public class VillagerConfigBase : ScriptableObject {
-		/// <summary>
-		/// 每Tick做对应工作的经验增加量
-		/// </summary>
-		public JobList JobExperienceGain;
-		/// <summary>
-		/// 提升等级的经验要求
-		/// </summary>
-		public JobList LevelUpDemands;
-		/// <summary>
-		/// 每一级对工作产出的增益
-		/// </summary>
-		public JobList JobBuff;
+		[Header("经验获取速度")] public JobList JobExperienceGain;
+		[Header("升级经验要求")] public JobList LevelUpDemands;
+		[Header("产出增益/每级")] public JobList JobBuff;
 
-		/// <summary>
-		/// 动画
-		/// </summary>
-		public Animator Animator;
+		[Header("动画")] public Animator Animator;
 	}
 }

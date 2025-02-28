@@ -18,6 +18,10 @@ MonoBehaviour:
   LayerPrefabs:
   - Key: 0
     Value: {fileID: 6027108390514112321, guid: 5878d12087484da4c90322c23862563f, type: 3}
+  - Key: 1
+    Value: {fileID: 2011307254257003627, guid: 17fffa9b5b4cf5b4bb28692bac405adf, type: 3}
   VillagerPrefabs: []
   TicksOfDay: 500
   TicksOfNight: 200
+  MaxContainPerLayer: 50
+  MaxLayerAmount: 21

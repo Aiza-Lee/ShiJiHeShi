@@ -22,7 +22,6 @@ namespace BasicLogic
 			LayerSize = Enum.GetValues(typeof(LayerType)).Length;
 		}
 
-
 		[Header("挂载")]
 		public BasicGameConfig GameConfig;
 
@@ -37,19 +36,14 @@ namespace BasicLogic
 				TickManager.Instance, 
 				WorldManager.Instance
 			};
-			// test:
-			var saves = SaveSystem.GetAllSaveInfos();
-			_curSaveInfo = saves.Last();
-			SaveSystem.SaveObject(_curSaveInfo, new GameSaveData());
-			GameStart(_curSaveInfo);
 		}
-		// test:
-		private void Update() {	
-			if (Input.GetKeyDown(KeyCode.N)) {
-				_curSaveInfo = SaveSystem.CreateSaveFile("测试存档01");
-				GameStart(_curSaveInfo);
-			}
-		}
+		// // test:
+		// private void Update() {	
+		// 	if (Input.GetKeyDown(KeyCode.N)) {
+		// 		_curSaveInfo = SaveSystem.CreateSaveFile("测试存档01");
+		// 		GameStart(_curSaveInfo);
+		// 	}
+		// }
 
 		public void GameStart(SaveInfo saveInfo) {
 			_gameSaveData = SaveSystem.LoadObject<GameSaveData>(saveInfo);

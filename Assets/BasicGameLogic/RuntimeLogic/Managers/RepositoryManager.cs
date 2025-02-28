@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using LogicUtilities;
 using NSFrame;
 using UnityEngine;
 
@@ -36,7 +36,7 @@ namespace BasicLogic
 
 		public bool CheckRequest(RepoList demands) {
 			if (demands == null || demands.Count == 0) return true;
-			foreach (var demand in demands.List) {
+			foreach (var demand in demands.RList) {
 				if (_amounts[demand.RepoInt].Value < demand.Value) return false;
 			}
 			return true;
@@ -47,10 +47,10 @@ namespace BasicLogic
 		/// </summary>
 		public bool Consume(RepoList consumes) {
 			if (consumes == null || consumes.Count == 0) return true;
-			foreach (var consume in consumes.List) {
+			foreach (var consume in consumes.RList) {
 				if (_amounts[consume.RepoInt].Value < consume.Value) return false;
 			}
-			foreach (var consume in consumes.List) {
+			foreach (var consume in consumes.RList) {
 				_globalConsBuffs[consume.RepoInt].Value -= consume.Value;
 			}
 			return true;
@@ -59,12 +59,12 @@ namespace BasicLogic
 		public bool TickConsume(RepoList consVels, RepoList archBuffs, RepoList villagerBuffs) {
 			if (consVels == null || consVels.Count == 0) return true;
 			int idx;
-			foreach (var consume in consVels.List) {
+			foreach (var consume in consVels.RList) {
 				idx = consume.RepoInt;
 				if (_amounts[idx].Value < consume.Value * (1.0f - archBuffs[idx].Value - villagerBuffs[idx].Value - _globalConsBuffs[idx].Value)) 
 					return false; 
 			}
-			foreach (var consume in consVels.List) {
+			foreach (var consume in consVels.RList) {
 				idx = consume.RepoInt;
 				_amounts[idx].Value -= consume.Value * (1.0f - archBuffs[idx].Value - villagerBuffs[idx].Value - _globalConsBuffs[idx].Value);
 			}
@@ -73,12 +73,12 @@ namespace BasicLogic
 		public bool TickConsume(RepoList consVels, RepoList archBuffs) {
 			if (consVels == null || consVels.Count == 0) return true;
 			int idx;
-			foreach (var consume in consVels.List) {
+			foreach (var consume in consVels.RList) {
 				idx = consume.RepoInt;
 				if (_amounts[idx].Value < consume.Value * (1.0f - archBuffs[idx].Value - _globalConsBuffs[idx].Value)) 
 					return false; 
 			}
-			foreach (var consume in consVels.List) {
+			foreach (var consume in consVels.RList) {
 				idx = consume.RepoInt;
 				_amounts[idx].Value -= consume.Value * (1.0f - archBuffs[idx].Value - _globalConsBuffs[idx].Value);
 			}
@@ -86,14 +86,14 @@ namespace BasicLogic
 		}
 		public void TickProduce(RepoList produceVels, RepoList archBuffs, RepoList villagerBuffs) {
 			int idx;
-			foreach (var produce in produceVels.List) {
+			foreach (var produce in produceVels.RList) {
 				idx = produce.RepoInt;
 				_amounts[produce.RepoInt].Value += produce.Value * (1.0f + archBuffs[idx].Value + villagerBuffs[idx].Value + _globalProdBuffs[idx].Value);
 			}
 		}
 		public void TickProduce(RepoList produceVels, RepoList archBuffs) {
 			int idx;
-			foreach (var produce in produceVels.List) {
+			foreach (var produce in produceVels.RList) {
 				idx = produce.RepoInt;
 				_amounts[produce.RepoInt].Value += produce.Value * (1.0f + archBuffs[idx].Value + _globalProdBuffs[idx].Value);
 			}

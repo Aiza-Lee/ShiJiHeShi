@@ -14,25 +14,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ArchType: 0
   Name: Cottage
-  Size: 0
-  MaxContain: 0
+  Size: 1
+  MaxContain: 3
   Introductions:
-  - 
-  - 
+  - "\u829D\u58EB\u623F\u5B50"
   InherentProduceVelocities:
-  - List:
+  - RList:
     - RepositoryType: 0
-      Value: 114514
+      Value: 0.1
   ExtraProduceVelocitiesPerOne:
-  - List: []
+  - RList:
+    - RepositoryType: 0
+      Value: 100
+    - RepositoryType: 1
+      Value: 100
   InherentConsumeVelocities:
-  - List: []
+  - RList: []
   ExtraConsumeVelocitiesPerOne:
-  - List: []
+  - RList: []
   VolumeAdds:
-  - List: []
+  - RList: []
   ConstructCost:
-    List: []
+    RList: []
   DeconstructRate: 0
   RepairRate: 0
   Animator: {fileID: 0}
