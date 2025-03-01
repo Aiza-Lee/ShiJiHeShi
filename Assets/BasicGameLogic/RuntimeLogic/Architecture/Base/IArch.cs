@@ -65,6 +65,10 @@ namespace BasicLogic
 
 		public SpriteRenderer SpriteRenderer { get; private set; }
 
+		private void Awake() {
+			SpriteRenderer = GetComponent<SpriteRenderer>();
+		}
+
 		/// <summary>
 		/// 从全局游戏配置中实例化Arch的预制体，触发CTOR事件，参数为IArch类型
 		/// </summary>
@@ -113,7 +117,6 @@ namespace BasicLogic
 			}
 		}
 		protected virtual void OnConstruct() {
-			SpriteRenderer = GetComponent<SpriteRenderer>();
 			EventSystem.Invoke<IArch>("CTOR", this);
 			EventSystem.AddListener("Tick", UpdateRepo);
 		}

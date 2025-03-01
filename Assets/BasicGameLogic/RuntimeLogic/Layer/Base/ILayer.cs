@@ -24,6 +24,13 @@ namespace BasicLogic
 		public LerpMove LerpMove { get; private set; }
 		public SpriteRenderer SpriteRenderer { get; private set; }
 
+		private void Awake() {
+			SmoothMove = GetComponent<SmoothMove>();
+			SmoothScale = GetComponent<SmoothScale>();
+			LerpMove = GetComponent<LerpMove>();
+			SpriteRenderer = GetComponent<SpriteRenderer>();
+		}
+
 		/// <summary>
 		/// 从全局游戏配置中实例化Layer的预制体
 		/// </summary>
@@ -58,10 +65,6 @@ namespace BasicLogic
 		}
 
 		protected void OnConstruct() {
-			SmoothMove = GetComponent<SmoothMove>();
-			SmoothScale = GetComponent<SmoothScale>();
-			LerpMove = GetComponent<LerpMove>();
-			SpriteRenderer = GetComponent<SpriteRenderer>();
 			EventSystem.Invoke<ILayer>("LayerCTOR", this);
 		}
 

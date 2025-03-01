@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace BasicLogic
 {
+	// Test:
 	public class Test : MonoSingleton<Test> {
 
 		public PredefinedWorldConfig PredefinedWorldConfig;
@@ -17,7 +18,7 @@ namespace BasicLogic
 		}
 
 		private void Update() {
-			if (Input.GetKeyDown( KeyCode.S)) {
+			if (Input.GetKeyDown(KeyCode.N)) {
 				GameManager.Instance.GameStart(_curSaveInfo);
 			}
 		}

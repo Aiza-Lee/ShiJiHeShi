@@ -25,8 +25,16 @@ namespace LogicUtilities
 			}
 		}
 
+		private void Awake() {
+			_Target = transform.position;
+		}
+
+		void Update() {
+			_updateAction?.Invoke();
+		}
+
 		public void Translate(Vector3 vector3) {
-			Target = transform.position + vector3;
+			Target += vector3;
 		}
 
 		private float DisPow2(Vector3 vec1, Vector3 vec2) {
@@ -53,10 +61,5 @@ namespace LogicUtilities
 			}
 		}
 
-
-		void Update() {
-
-			_updateAction?.Invoke();
-		}
 	}
 }

@@ -25,6 +25,19 @@ namespace LogicUtilities
 			}
 		}
 
+		private void Awake() {
+			_Target = transform.localScale;
+		}
+
+		void Update() {
+			_updateAction?.Invoke();
+		}
+
+		public void DirectlySet(Vector3 vec3) {
+			_updateAction = null;
+			_Target = transform.localScale = vec3;
+		}
+
 		private float DisPow2(Vector3 vec1, Vector3 vec2) {
 			return (vec1.x - vec2.x) * (vec1.x - vec2.x) + (vec1.y - vec2.y) * (vec1.y - vec2.y) + (vec1.z - vec2.z) * (vec1.z - vec2.z);
 		}
@@ -47,10 +60,6 @@ namespace LogicUtilities
 			if (transform.localScale.IsApproximatelyEqual(Target)) {
 				_updateAction = null;
 			}
-		}
-		
-		void Update() {
-			_updateAction?.Invoke();
 		}
 	}
 }

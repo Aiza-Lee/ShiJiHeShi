@@ -19,13 +19,21 @@ namespace LogicUtilities
 			}
 		}
 
+		private void Awake() {
+			_Target = transform.position;
+		}
+
 		private void Update() {
 			_updateAction?.Invoke();
 		}
 
 		public void Translate(Vector3 movement) {
-			Debug.Log($"LayerMove:{movement}");
-			Target = transform.position + movement;
+			Target += movement;
+		}
+
+		public void DirectlySet(Vector3 vec3) {
+			_updateAction = null;
+			_Target = transform.position = vec3;
 		}
 
 		private void DealPos() {
