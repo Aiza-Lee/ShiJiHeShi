@@ -7,25 +7,24 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs_DefaultSprite
-  m_Shader: {fileID: -6465566751694194690, guid: f724df7ca185b0146a0d6f1968f03ab7, type: 3}
+  m_Name: Shader Graphs_SparkingEdge
+  m_Shader: {fileID: -6465566751694194690, guid: bfffdeed05c257e48865aa884b6d27c3, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
-  m_LightmapFlags: 2
+  m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
-  disabledShaderPasses:
-  - MOTIONVECTORS
+  disabledShaderPasses: []
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: d6e98ccdb867d1f48b01cf34d11e36f7, type: 3}
+        m_Texture: {fileID: -8328923581568760697, guid: 031ce11ba9e9ed7489366888532068bc, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -42,14 +41,14 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _QueueControl: 0
-    - _QueueOffset: 0
+    - _Intensity: 0.12
+    - _Offset: 0.02
+    - _On: 1
     m_Colors:
-    - _Color: {r: 0, g: 0, b: 0, a: 0}
-    - _RenderColor: {r: 0, g: 0, b: 0, a: 0}
+    - _Color: {r: 30.451614, g: 32, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &9002895108573329629
+--- !u!114 &3856923909159999034
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

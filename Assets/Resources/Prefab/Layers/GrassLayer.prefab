@@ -67,33 +67,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af7bc40e9237945408d0214d774af232, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveType: 1
-  ConstantSpeed: 0
-  Curve:
+  SpeedCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.01
-      inSlope: 2.8301873
-      outSlope: 2.8301873
+      value: 0
+      inSlope: 2.7594337
+      outSlope: 2.7594337
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.047222234
+      outWeight: 0.04444445
     - serializedVersion: 3
       time: 1
-      value: 0.01
-      inSlope: -0.8625334
-      outSlope: -0.8625334
+      value: 0
+      inSlope: -1.0047171
+      outSlope: -1.0047171
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.116666675
+      inWeight: 0.111111045
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  CurveSpeed: 1
+  ChangeTime: 0.3
 --- !u!114 &9059520459114525426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106,33 +104,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ec9459aaabcdff4e9c2c4fe03ab7b79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveType: 1
-  ConstantSpeed: 0
-  Curve:
+  SpeedCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.01
-      inSlope: 2.8301873
-      outSlope: 2.8301873
+      value: 0
+      inSlope: 2.7594337
+      outSlope: 2.7594337
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.047222234
+      outWeight: 0.04444445
     - serializedVersion: 3
       time: 1
-      value: 0.01
-      inSlope: -0.8625334
-      outSlope: -0.8625334
+      value: 0
+      inSlope: -1.0047171
+      outSlope: -1.0047171
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.116666675
+      inWeight: 0.111111045
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  CurveSpeed: 1
+  ChangeTime: 0.3
 --- !u!212 &4004212229312322754
 SpriteRenderer:
   m_ObjectHideFlags: 0

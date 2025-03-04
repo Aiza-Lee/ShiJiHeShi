@@ -68,6 +68,12 @@ namespace BasicLogic
 		private void Awake() {
 			SpriteRenderer = GetComponent<SpriteRenderer>();
 		}
+		private void OnEnable() {
+			EventSystem.AddListener("Tick", UpdateRepo);
+		}
+		private void OnDisable() {
+			EventSystem.RemoveListener("Tick", UpdateRepo);
+		}
 
 		/// <summary>
 		/// 从全局游戏配置中实例化Arch的预制体，触发CTOR事件，参数为IArch类型
@@ -85,7 +91,7 @@ namespace BasicLogic
 			go.name = arch.Config.Name;
 			arch._saveData = archSaveData;
 
-			arch.OnConstruct();
+			EventSystem.Invoke<IArch>("CTOR", arch);
 			return arch;
 		}
 
@@ -99,7 +105,7 @@ namespace BasicLogic
 			go.name = arch.Config.Name;
 			arch._saveData = new(archType, layer, order, level);
 
-			arch.OnConstruct();
+			EventSystem.Invoke<IArch>("CTOR", arch);
 			return arch;
 		}
 
@@ -115,13 +121,6 @@ namespace BasicLogic
 					RepositoryManager.Instance.TickProduce(PerOneProdVels[Level], _prodBuffs, villager.ProdBuffs);
 				}
 			}
-		}
-		protected virtual void OnConstruct() {
-			EventSystem.Invoke<IArch>("CTOR", this);
-			EventSystem.AddListener("Tick", UpdateRepo);
-		}
-		protected virtual void OnDeconstruct() {
-			EventSystem.RemoveListener("Tick", UpdateRepo);
 		}
 	}
 }

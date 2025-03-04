@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8250130572440629229}
   - component: {fileID: 2273045342668823788}
   m_Layer: 8
-  m_Name: Cottage
+  m_Name: TestCottage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -110,7 +110,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 697fb4f3e3b343d4ebe462fe7e80bd39, type: 2}
+  - {fileID: -876546973899608171, guid: bfffdeed05c257e48865aa884b6d27c3, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -132,7 +132,7 @@ SpriteRenderer:
   m_SortingLayer: 22
   m_SortingOrder: -1
   m_Sprite: {fileID: -653725397457098092, guid: 031ce11ba9e9ed7489366888532068bc, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.45911938, g: 0.37920418, b: 0.3046358, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

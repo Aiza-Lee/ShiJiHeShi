@@ -46,7 +46,7 @@ namespace BasicLogic
 			layer._saveData = layerSaveData;
 			layerSaveData.InLayerArches?.ForEach( (archData) => layer._inLayerArches.Add(IArch.LoadArchGO(archData, layer.transform)) );
 
-			layer.OnConstruct();
+			EventSystem.Invoke<ILayer>("LayerCTOR", layer);
 			return layer;
 		}
 
@@ -59,13 +59,9 @@ namespace BasicLogic
 			}
 			go.name = layer.Config.Name;
 			layer._saveData = new(layerType, layerCount);
-			
-			layer.OnConstruct();
-			return layer;
-		}
 
-		protected void OnConstruct() {
-			EventSystem.Invoke<ILayer>("LayerCTOR", this);
+			EventSystem.Invoke<ILayer>("LayerCTOR", layer);
+			return layer;
 		}
 
 	}

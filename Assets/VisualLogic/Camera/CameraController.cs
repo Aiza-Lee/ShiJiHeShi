@@ -9,6 +9,7 @@ namespace VisualLogic
 		Focus = 0,
 		Normal,
 		Panorama,
+		Biggest,
 	}
 
 	public class CameraController : MonoSingleton<CameraController> {
@@ -51,20 +52,20 @@ namespace VisualLogic
 			_updateAction?.Invoke();
 
 			if (Input.GetKey(KeyCode.A)) {
-				transform.Translate(new(-Time.deltaTime * 10 * CameraSpeed, 0, 0));
+				SmoothMove.Translate(new(-Time.deltaTime * 10 * CameraSpeed, 0, 0));
 			}
 			if (Input.GetKey(KeyCode.D)) {
-				transform.Translate(new(Time.deltaTime * 10 * CameraSpeed, 0, 0));
+				SmoothMove.Translate(new(Time.deltaTime * 10 * CameraSpeed, 0, 0));
 			}
 			
 			if (Input.GetKeyDown(KeyCode.Alpha1)) {
 				CameraSize = CameraSize.Focus;
-			}
-			if (Input.GetKeyDown(KeyCode.Alpha2)) {
+			} else if (Input.GetKeyDown(KeyCode.Alpha2)) {
 				CameraSize = CameraSize.Normal;
-			}
-			if (Input.GetKeyDown(KeyCode.Alpha3)) {
+			} else if (Input.GetKeyDown(KeyCode.Alpha3)) {
 				CameraSize = CameraSize.Panorama;
+			} else if (Input.GetKeyDown(KeyCode.Alpha4)) {
+				CameraSize = CameraSize.Biggest;
 			}
 		}
 
@@ -76,7 +77,7 @@ namespace VisualLogic
 				return;
 			}
 			float cs = _camera.orthographicSize;
-			_camera.orthographicSize = cs + (target > cs ? 1 : -1) * Curve.Evaluate(1.0f - Mathf.Abs(cs - target) / _distance) * Time.deltaTime * CurveSpeed * 100;
+			_camera.orthographicSize = cs + (target > cs ? 1 : -1) * Curve.Evaluate(1.0f - Mathf.Abs(cs - target) / _distance) * Time.deltaTime * CurveSpeed;
 		}
 		
 	}

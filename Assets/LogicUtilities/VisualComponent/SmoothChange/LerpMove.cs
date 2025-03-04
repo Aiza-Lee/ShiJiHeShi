@@ -14,8 +14,8 @@ namespace LogicUtilities
 		public Vector3 Target {
 			get => _Target;
 			set {
-				_updateAction = DealPos;
 				_Target = value;
+				_updateAction = DealPos;
 			}
 		}
 
@@ -37,6 +37,9 @@ namespace LogicUtilities
 		}
 
 		private void DealPos() {
+			// Debug.Log(transform.position);
+			// Debug.Log(Target);
+			// Debug.Log("=============");
 			transform.position = Vector3.Lerp(transform.position, Target, LerpSpeed);
 			if (transform.position.IsApproximatelyEqual(Target)) {
 				_updateAction = null;
