@@ -19,14 +19,19 @@
 * "Tick" 参数：无。 游戏逻辑Tick触发时
 * "CTOR" 参数：IArch。 当建筑被创建时
 * "LayerCTOR" 参数：ILayer。 当Layer被创建时
-* "CM" 参数：Vector3。 当相机移动时
+* "LCM" 参数：Vector3, Vector3。 当layer相机移动时
 
 ## Todo
-* 思考一下像地板这种x方向scale极大的如何处理更好
+* 完善实例化prefab时的shader新建，也就是为ilayer加个init之类的来添加shader，对建筑不需要用对象池
+* 前后移动淡入淡出效果
+* smoothMove 添加多个配置
+* 灯光放缩问题
 * 村民任务系统
-* 视觉系统
-* 研究一下发光贴图，用这个方法解决Light不受Scale影响的问题
 * 思考一下科技树存档的存储方式
+
+## Todo2
+* 研究一下发光贴图，用这个方法解决Light不受Scale影响的问题
+  * Solution: 类似于 _MainTex 和 _BaseMap，在 sprite Editor 中添加次级纹理，但是这个方法似乎并不完善，因为bloom的效果是统一的，不能随建筑的类型而定
 
 
 ## 2025/2/21

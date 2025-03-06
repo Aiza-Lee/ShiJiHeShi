@@ -12,20 +12,20 @@ namespace VisualLogic
 		Biggest,
 	}
 
-	public class CameraController : MonoSingleton<CameraController> {
+	public class LayerCameraController : MonoSingleton<LayerCameraController> {
 
 		[Header("Constants")]
-		[Tooltip("从0开始从小到大")] public float[] PreDefinedSize = new float[3];
+		[Tooltip("从0开始从小到大")] public float[] PresetSizes = new float[3];
 		public AnimationCurve Curve;
 		public float CurveSpeed = 1.0f; 
 		public float CameraSpeed;
 
-		public SmoothMove SmoothMove { get; private set; }
+		public Vector3 VirtualPosition { get; private set; }
 
+		/* 处理相机平滑放缩功能 */
 		private Camera _camera;
 		private float _distance;
 		private Action _updateAction;
-
 
 		[Header("Informations")]
 		[SerializeField][ReadOnly] private CameraSize _CameraSize;
@@ -38,7 +38,7 @@ namespace VisualLogic
 				if (_CameraSize == value) return;
 				_CameraSize = value;
 				_updateAction = DealSize;
-				_distance = Mathf.Abs(_camera.orthographicSize - PreDefinedSize[(int)value]);
+				_distance = Mathf.Abs(_camera.orthographicSize - PresetSizes[(int)value]);
 			}
 		}
 
@@ -46,18 +46,24 @@ namespace VisualLogic
 			base.Awake();
 			_CameraSize = CameraSize.Normal;
 			_camera = GetComponent<Camera>();
-			SmoothMove = GetComponent<SmoothMove>();
+			VirtualPosition = _camera.transform.position;
 		}
 		private void Update() {
 			_updateAction?.Invoke();
 
+			/* 控制相机左右移动 */
 			if (Input.GetKey(KeyCode.A)) {
-				SmoothMove.Translate(new(-Time.deltaTime * 10 * CameraSpeed, 0, 0));
+				var movement = new Vector3(-Time.deltaTime * CameraSpeed, 0, 0);
+				VirtualPosition += movement;
+				EventSystem.Invoke("LCM", movement);
 			}
 			if (Input.GetKey(KeyCode.D)) {
-				SmoothMove.Translate(new(Time.deltaTime * 10 * CameraSpeed, 0, 0));
+				var movement = new Vector3(Time.deltaTime * CameraSpeed, 0, 0);
+				VirtualPosition += movement;
+				EventSystem.Invoke("LCM", movement);
 			}
 			
+			/* 控制相机视角大小 */
 			if (Input.GetKeyDown(KeyCode.Alpha1)) {
 				CameraSize = CameraSize.Focus;
 			} else if (Input.GetKeyDown(KeyCode.Alpha2)) {
@@ -70,8 +76,11 @@ namespace VisualLogic
 		}
 
 
+		/// <summary>
+		/// 处理相机平滑放缩视角
+		/// </summary>
 		private void DealSize() {
-			float target = PreDefinedSize[(int)CameraSize];
+			float target = PresetSizes[(int)CameraSize];
 			if (target.IsApproximatelyEqual(_camera.orthographicSize)) {
 				_updateAction = null;
 				return;

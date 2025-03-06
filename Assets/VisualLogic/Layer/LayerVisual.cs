@@ -19,7 +19,7 @@ namespace VisualLogic
 		private const float DEFAULT_LAYER_Y = -1.0f;
 
 		[Header("挂载")]
-		public CameraController LayerCamera;
+		public LayerCameraController LayerCamera;
 
 		[Header("Cosntants")]
 		[Range(0.0f, 10f)] public float LayerGap;
@@ -54,20 +54,15 @@ namespace VisualLogic
 		private void OnEnable() {
 			EventSystem.AddListener<ILayer>("LayerCTOR", OnLayerCreate);
 			EventSystem.AddListener<IArch>("CTOR", OnArchCreate);
-			EventSystem.AddListener<Vector3>("CM", OnCameraMove);
+			EventSystem.AddListener<Vector3>("LCM", OnCameraMove);
 		}
 		private void OnDisable() {
 			EventSystem.RemoveListener<ILayer>("LayerCTOR", OnLayerCreate);
 			EventSystem.RemoveListener<IArch>("CTOR", OnArchCreate);
-			EventSystem.RemoveListener<Vector3>("CM", OnCameraMove);
+			EventSystem.RemoveListener<Vector3>("LCM", OnCameraMove);
 		}
 
 		private void Update() {
-			if (!_cameraLastPos.IsApproximatelyEqual(LayerCamera.transform.position)) {
-				// OnCameraMove(movement);
-				EventSystem.Invoke<Vector3>("CM", LayerCamera.transform.position - _cameraLastPos);
-				_cameraLastPos = LayerCamera.transform.position;
-			}
 			if (Input.GetKeyDown(KeyCode.W)) { MoveForBackward(forward: true); }
 			if (Input.GetKeyDown(KeyCode.S)) { MoveForBackward(forward: false); }
 		}
@@ -94,10 +89,10 @@ namespace VisualLogic
 		}
 
 		private void OnCameraMove(Vector3 movement) {
-			for (int i = _curLayer + 1; i <= _curMaxLayer; ++i) {
+			for (int i = _curLayer; i <= _curMaxLayer; ++i) {
 				var slope = Slope(_layers[i + RADIUS].Layer);
-				// _layers[i + RADIUS].SmoothMove.Translate(movement * (1.0f - slope));
-				_layers[i + RADIUS].transform.Translate(movement * (1.0f - slope));
+				// _layers[i + RADIUS].transform.Translate(movement * (-slope));
+				_layers[i + RADIUS].SmoothMove.Translate(movement * (-slope), 1);
 
 				if (i - _curLayer + 1 == LayersToShow) 
 					break;
@@ -141,14 +136,14 @@ namespace VisualLogic
 
 			private void SetSacleAndPos(ILayer layer, bool directly = false) {
 				float slope = Slope(layer.Layer);
-				var targetPosition = new Vector3((1.0f - slope) * LayerCamera.transform.position.x, DEFAULT_LAYER_Y + (1.0f - slope) * YOffset * 10);
+				var targetPosition = new Vector3((-slope) * LayerCamera.VirtualPosition.x, DEFAULT_LAYER_Y + (-slope) * YOffset * 10);
 				var targetScale = new Vector3(DEFAULT_LAYER_SCALE * slope, DEFAULT_LAYER_SCALE * slope, 1);
 				if (directly) {
 					layer.SmoothMove.DirectlySet(targetPosition);
 					layer.SmoothScale.DirectlySet(targetScale);
 				} else {
-					layer.SmoothMove.Target = targetPosition;
-					layer.SmoothScale.Target = targetScale;
+					layer.SmoothMove.SetTarget(targetPosition);
+					layer.SmoothScale.SetTarget(targetScale);
 				}
 			}
 			/// <summary>
