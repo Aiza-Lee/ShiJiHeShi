@@ -64,15 +64,17 @@ namespace BasicLogic
 		public RepoList ConsBuffs => _consBuffs;
 
 		public SpriteRenderer SpriteRenderer { get; private set; }
+		public SmoothFade SmoothFade { get; private set; }
 
 		private void Awake() {
 			SpriteRenderer = GetComponent<SpriteRenderer>();
+			SmoothFade = GetComponent<SmoothFade>();
 		}
 		private void OnEnable() {
-			EventSystem.AddListener("Tick", UpdateRepo);
+			EventSystem.AddListener((int)LogicEvent.Tick, UpdateRepo);
 		}
 		private void OnDisable() {
-			EventSystem.RemoveListener("Tick", UpdateRepo);
+			EventSystem.RemoveListener((int)LogicEvent.Tick, UpdateRepo);
 		}
 
 		/// <summary>
@@ -83,29 +85,31 @@ namespace BasicLogic
 		/// <returns></returns>
 		public static IArch LoadArchGO(ArchSaveData archSaveData, Transform father) {
 			var prefab = GameManager.Instance.GameConfig.GetArchPrefab(archSaveData.ArchType);
-			var go = GameObject.Instantiate(prefab, father);
+			var go = InstantiateWithNewMaterial(prefab, father);
 			if (!go.TryGetComponent<IArch>(out var arch)) {
 				Debug.LogError($"Cannot get component ILayer from perfab of type {archSaveData.ArchType}");
 				return null;
 			}
 			go.name = arch.Config.Name;
 			arch._saveData = archSaveData;
+			arch.SmoothFade.Init(arch.SpriteRenderer.material);
 
-			EventSystem.Invoke<IArch>("CTOR", arch);
+			EventSystem.Invoke<IArch>((int)LogicEvent.ArchConstructed_A, arch);
 			return arch;
 		}
 
 		public static IArch NewArch(ArchType archType, int layer, int order, int level, Transform father) {
 			var prefab = GameManager.Instance.GameConfig.GetArchPrefab(archType);
-			var go = GameObject.Instantiate(prefab, father);
+			var go = InstantiateWithNewMaterial(prefab, father);
 			if (!go.TryGetComponent<IArch>(out var arch)) {
 				Debug.LogError($"Cannot get component ILayer from perfab of type {archType}");
 				return null;
 			}
 			go.name = arch.Config.Name;
 			arch._saveData = new(archType, layer, order, level);
+			arch.SmoothFade.Init(arch.SpriteRenderer.material);
 
-			EventSystem.Invoke<IArch>("CTOR", arch);
+			EventSystem.Invoke<IArch>((int)LogicEvent.ArchConstructed_A, arch);
 			return arch;
 		}
 
@@ -122,5 +126,16 @@ namespace BasicLogic
 				}
 			}
 		}
+
+		#region Utilities
+			private static GameObject InstantiateWithNewMaterial(GameObject prefab, Transform father) {
+				var go  = GameObject.Instantiate(prefab, father);
+				if (go.TryGetComponent<SpriteRenderer>(out var renderer)) {
+					renderer.material = new Material(renderer.material);
+				}
+				return go;
+			}
+			
+		#endregion
 	}
 }

@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
-using NSFrame;
 using UnityEngine;
 
 namespace LogicUtilities 
 {
-	public abstract class ISmoothChange : MonoBehaviour {
+	public abstract class ISmoothChange<T> : MonoBehaviour where T : struct {
 
 		[Serializable]
 		public class ChangeData {
@@ -17,16 +16,16 @@ namespace LogicUtilities
 
 
 		protected Action _updateAction;
+		protected Action _targetCallBack;
 		protected int _curMod = 0;
-		protected Vector3 _target;
-		public Vector3 Target => _target;
+		protected T _target;
+		public T Target => _target;
 
 		protected float _elapsedTime;
-		protected Vector3 _distance;
+		protected T _distance;
 
 
 		private void Awake() {
-			_target = transform.position;
 			_updateAction = null;
 			ChangePresets.ForEach( moveData => moveData.Integral = CalculateIntegralSimpson(moveData.SpeedCurve, 0.0f, 1.0f) );
 		}
@@ -34,16 +33,15 @@ namespace LogicUtilities
 			_updateAction?.Invoke();
 		}
 
-		public virtual void SetTarget(Vector3 vec3, int modID = 0) {
-			_target = vec3;
+		public virtual void SetTarget(T tValue, int modID = 0, Action callBack = null) {
+			_target = tValue;
 			_curMod = modID;
 			_elapsedTime = 0f;
 			_updateAction = DealPosition;
+			_targetCallBack = callBack;
 		}
-		public void Translate(Vector3 vec3, int modID = 0) {
-			SetTarget(_target + vec3, modID);
-		}
-		public abstract void DirectlySet(Vector3 vec3);
+		public abstract void Translate(T tValue, int modID = 0, Action callBack = null);
+		public abstract void DirectlySet(T tValue);
 
 		protected abstract void DealPosition();
 

@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 238747012759126993}
   - component: {fileID: 7560932369682862875}
   - component: {fileID: 8365384266281466305}
+  - component: {fileID: -8746474657862871729}
   - component: {fileID: 3543826019459502082}
-  - component: {fileID: 108460821205945537}
   m_Layer: 8
   m_Name: SnowLayer
   m_TagString: Untagged
@@ -100,34 +100,25 @@ MonoBehaviour:
       - serializedVersion: 3
         time: 0
         value: 1
-        inSlope: -0.0023683344
-        outSlope: -0.0023683344
-        tangentMode: 0
+        inSlope: -1
+        outSlope: -1
+        tangentMode: 34
         weightedMode: 0
         inWeight: 0
-        outWeight: 0.40277788
-      - serializedVersion: 3
-        time: 0.61999047
-        value: 0.4866836
-        inSlope: -2.3518927
-        outSlope: -2.3518927
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.15428814
-        outWeight: 0.1929782
+        outWeight: 0.33333334
       - serializedVersion: 3
         time: 1
         value: 0
-        inSlope: -0.020289524
-        outSlope: -0.020289524
-        tangentMode: 0
+        inSlope: -1
+        outSlope: -1
+        tangentMode: 34
         weightedMode: 0
-        inWeight: 0.5409219
+        inWeight: 0.33333334
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    ChangeTime: 0.8
+    ChangeTime: 0.7
     Integral: 0
 --- !u!114 &8365384266281466305
 MonoBehaviour:
@@ -168,6 +159,45 @@ MonoBehaviour:
       m_RotationOrder: 4
     ChangeTime: 0.3
     Integral: 0
+--- !u!114 &-8746474657862871729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011307254257003627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e64b82976c589964e9cd7b1927fa4a08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ChangePresets:
+  - SpeedCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    ChangeTime: 0.1
+    Integral: 0
 --- !u!212 &3543826019459502082
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -190,7 +220,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 52d356470f214c542a2e719de048d5e1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -222,16 +252,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &108460821205945537
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2011307254257003627}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39193ca9a0c9afd43924bf49dcb5a243, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LerpSpeed: 0.2

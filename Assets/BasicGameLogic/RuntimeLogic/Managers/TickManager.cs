@@ -1,3 +1,4 @@
+using LogicUtilities;
 using NSFrame;
 using UnityEngine;
 
@@ -25,7 +26,7 @@ namespace BasicLogic
 			private set {
 				if (Pause) return;
 				while (_TickSum < value) {
-					EventSystem.Invoke("Tick");
+					EventSystem.Invoke((int)LogicEvent.Tick);
 					++_TickSum;
 				}
 			} 

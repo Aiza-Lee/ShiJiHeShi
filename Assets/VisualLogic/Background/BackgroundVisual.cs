@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using LogicUtilities;
 using NSFrame;
 using UnityEngine;
 
@@ -13,10 +14,10 @@ namespace VisualLogic
 		public List<float> MoveVelocities;
 
 		private void OnEnable() {
-			EventSystem.AddListener<Vector3>("CM", OnCameraMove);
+			EventSystem.AddListener<Vector3>((int)LogicEvent.LayerCameraMove_v3, OnCameraMove);
 		}
 		private void OnDisable() {
-			EventSystem.RemoveListener<Vector3>("CM", OnCameraMove);
+			EventSystem.RemoveListener<Vector3>((int)LogicEvent.LayerCameraMove_v3, OnCameraMove);
 		}
 
 		private void OnCameraMove(Vector3 movement) {

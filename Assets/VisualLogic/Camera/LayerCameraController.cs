@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using LogicUtilities;
 using NSFrame;
 using UnityEngine;
@@ -19,6 +20,7 @@ namespace VisualLogic
 		public AnimationCurve Curve;
 		public float CurveSpeed = 1.0f; 
 		public float CameraSpeed;
+		public float ForbidMoveTime = 0.25f;
 
 		public Vector3 VirtualPosition { get; private set; }
 
@@ -26,6 +28,10 @@ namespace VisualLogic
 		private Camera _camera;
 		private float _distance;
 		private Action _updateAction;
+
+		/*  相机前后移动 */
+		private bool _forbidMove = false;
+
 
 		[Header("Informations")]
 		[SerializeField][ReadOnly] private CameraSize _CameraSize;
@@ -51,17 +57,32 @@ namespace VisualLogic
 		private void Update() {
 			_updateAction?.Invoke();
 
+			if (!_forbidMove) {
+				if (Input.GetKeyDown(KeyCode.W)) { 
+					EventSystem.Invoke<bool>((int)LogicEvent.LayerCameraFB_b, true); 
+					StartCoroutine(ForbidMove());
+				}
+				if (Input.GetKeyDown(KeyCode.S)) { 
+					EventSystem.Invoke<bool>((int)LogicEvent.LayerCameraFB_b, false); 
+					StartCoroutine(ForbidMove());
+				}
+			}
+			
+
 			/* 控制相机左右移动 */
-			if (Input.GetKey(KeyCode.A)) {
-				var movement = new Vector3(-Time.deltaTime * CameraSpeed, 0, 0);
-				VirtualPosition += movement;
-				EventSystem.Invoke("LCM", movement);
+			if (!_forbidMove) {
+				if (Input.GetKey(KeyCode.A)) {
+					var movement = new Vector3(-Time.deltaTime * CameraSpeed, 0, 0);
+					VirtualPosition += movement;
+					EventSystem.Invoke((int)LogicEvent.LayerCameraMove_v3, movement);
+				}
+				if (Input.GetKey(KeyCode.D)) {
+					var movement = new Vector3(Time.deltaTime * CameraSpeed, 0, 0);
+					VirtualPosition += movement;
+					EventSystem.Invoke((int)LogicEvent.LayerCameraMove_v3, movement);
+				}
 			}
-			if (Input.GetKey(KeyCode.D)) {
-				var movement = new Vector3(Time.deltaTime * CameraSpeed, 0, 0);
-				VirtualPosition += movement;
-				EventSystem.Invoke("LCM", movement);
-			}
+			
 			
 			/* 控制相机视角大小 */
 			if (Input.GetKeyDown(KeyCode.Alpha1)) {
@@ -73,6 +94,12 @@ namespace VisualLogic
 			} else if (Input.GetKeyDown(KeyCode.Alpha4)) {
 				CameraSize = CameraSize.Biggest;
 			}
+		}
+
+		IEnumerator ForbidMove() {
+			_forbidMove = true;
+			yield return new WaitForSecondsRealtime(ForbidMoveTime);
+			_forbidMove = false;
 		}
 
 

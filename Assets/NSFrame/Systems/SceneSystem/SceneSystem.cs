@@ -36,12 +36,12 @@ namespace NSFrame {
 			AsyncOperation loadOp = SceneManager.LoadSceneAsync(sceneName);
 			loadOp.allowSceneActivation = false;
 			while (!loadOp.isDone) {
-				EventSystem.Invoke<float>("LoadSceneProcess_f", loadOp.progress);
+				EventSystem.Invoke<float>((int)NSFrameEvent.LoadSceneProcess_f, loadOp.progress, eventType: EventType.NSFrame);
 				if (loadOp.progress >= 0.9f) 
 					loadOp.allowSceneActivation = true;
 				yield return null;
 			}
-			EventSystem.Invoke<float>("LoadSceneProcess_f", 1);
+			EventSystem.Invoke<float>((int)NSFrameEvent.LoadSceneProcess_f, 1, eventType: EventType.NSFrame);
 			callBack?.Invoke();
 
 			if (useDefaultTransition)

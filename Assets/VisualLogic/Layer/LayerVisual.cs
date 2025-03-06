@@ -31,19 +31,17 @@ namespace VisualLogic
 		[Header("Informations")]
 		[SerializeField][ReadOnly] private int _curLayer = 0;
 		[SerializeField][ReadOnly] private List<ILayer> _layers;
-		[SerializeField][ReadOnly] private int _curMaxLayer = 0;
+		[SerializeField][ReadOnly] private int _curMaxLayer = -1;
 		[SerializeField][ReadOnly] private int _curMinLayer = 0;
 
-		private Vector3 _cameraLastPos;
 		private List<float> _slope;
 		private int RADIUS => GameManager.Instance.GameConfig.MaxLayerRadius;
 		private int LAYER_MAX => GameManager.Instance.GameConfig.MaxLayerAmount;
 
 		private void Start() {
-			_cameraLastPos = LayerCamera.transform.position;
 
 			_slope = new();
-			for (int i = 0; i < LAYER_MAX; ++i) {
+			for (int i = -LAYER_MAX; i < LAYER_MAX; ++i) {
 				_slope.Add(CameraDistance / (CameraDistance + i * LayerGap));
 			}
 
@@ -52,87 +50,89 @@ namespace VisualLogic
 				_layers.Add(null); 
 		}
 		private void OnEnable() {
-			EventSystem.AddListener<ILayer>("LayerCTOR", OnLayerCreate);
-			EventSystem.AddListener<IArch>("CTOR", OnArchCreate);
-			EventSystem.AddListener<Vector3>("LCM", OnCameraMove);
+			EventSystem.AddListener<ILayer>((int)LogicEvent.LayerConstructed_L, OnLayerCreate);
+			EventSystem.AddListener<IArch>((int)LogicEvent.ArchConstructed_A, OnArchCreate);
+			EventSystem.AddListener<Vector3>((int)LogicEvent.LayerCameraMove_v3, OnCameraMove);
+			EventSystem.AddListener<bool>((int)LogicEvent.LayerCameraFB_b, MoveForBackward);
 		}
 		private void OnDisable() {
-			EventSystem.RemoveListener<ILayer>("LayerCTOR", OnLayerCreate);
-			EventSystem.RemoveListener<IArch>("CTOR", OnArchCreate);
-			EventSystem.RemoveListener<Vector3>("LCM", OnCameraMove);
+			EventSystem.RemoveListener<ILayer>((int)LogicEvent.LayerConstructed_L, OnLayerCreate);
+			EventSystem.RemoveListener<IArch>((int)LogicEvent.ArchConstructed_A, OnArchCreate);
+			EventSystem.RemoveListener<Vector3>((int)LogicEvent.LayerCameraMove_v3, OnCameraMove);
+			EventSystem.RemoveListener<bool>((int)LogicEvent.LayerCameraFB_b, MoveForBackward);
 		}
 
-		private void Update() {
-			if (Input.GetKeyDown(KeyCode.W)) { MoveForBackward(forward: true); }
-			if (Input.GetKeyDown(KeyCode.S)) { MoveForBackward(forward: false); }
-		}
-
-		private void OnArchCreate(IArch arch) {
-			int sortingLayerID = SortingLayer.NameToID("m_Layer" + (RADIUS + arch.Layer));
-			arch.SpriteRenderer.sortingLayerID = sortingLayerID;
-			foreach (var light in arch.Light2Ds) {
-				(light as Light2D).SetLayers(sortingLayerID);
+		#region 事件绑定
+			private void OnArchCreate(IArch arch) {
+				int sortingLayerID = SortingLayer.NameToID("m_Layer" + (RADIUS + arch.Layer));
+				arch.SpriteRenderer.sortingLayerID = sortingLayerID;
+				foreach (var light in arch.Light2Ds) {
+					(light as Light2D).SetLayers(sortingLayerID);
+				}
+				arch.transform.Translate(ArchGap * arch.Order, 0, 0);
 			}
-			arch.transform.Translate(ArchGap * arch.Order, 0, 0);
-		}
 
-		private void OnLayerCreate(ILayer layer) {
-			layer.SpriteRenderer.sortingLayerName = "m_Layer" + (RADIUS + layer.Layer);
-			_layers[layer.Layer + RADIUS] = layer;
-			_curMaxLayer = Mathf.Max(_curMaxLayer, layer.Layer);
-			_curMinLayer = Mathf.Min(_curMinLayer , layer.Layer);
-			if (layer.Layer < _curLayer || layer.Layer >= _curLayer + LayersToShow) {
-				layer.gameObject.SetActive(false);
-			} else {
-				SetSacleAndPos(layer, directly: true);
+			private void OnLayerCreate(ILayer layer) {
+				layer.SpriteRenderer.sortingLayerName = "m_Layer" + (RADIUS + layer.Layer);
+				_layers[layer.Layer + RADIUS] = layer;
+				_curMaxLayer = Mathf.Max(_curMaxLayer, layer.Layer);
+				_curMinLayer = Mathf.Min(_curMinLayer , layer.Layer);
+				if (layer.Layer < _curLayer || layer.Layer >= _curLayer + LayersToShow) {
+					layer.gameObject.SetActive(false);
+				} else {
+					SetSacleAndPos(layer, directly: true);
+				}
 			}
-		}
 
-		private void OnCameraMove(Vector3 movement) {
-			for (int i = _curLayer; i <= _curMaxLayer; ++i) {
-				var slope = Slope(_layers[i + RADIUS].Layer);
-				// _layers[i + RADIUS].transform.Translate(movement * (-slope));
-				_layers[i + RADIUS].SmoothMove.Translate(movement * (-slope), 1);
-
-				if (i - _curLayer + 1 == LayersToShow) 
-					break;
+			private void OnCameraMove(Vector3 movement) {
+				for (int i = _curMinLayer; i <= _curMaxLayer; ++i) {
+					var slope = Slope(_layers[i + RADIUS].Layer);
+					_layers[i + RADIUS].SmoothMove.Translate(movement * (-slope), 1);
+				}
 			}
-		}
-
-		private void MoveForBackward(bool forward) {
-			var lastCurLayer = _curLayer;
-			if (forward) {
-				if (_curLayer + 1 <= _curMaxLayer) {
-					++_curLayer;
-					_layers[lastCurLayer + RADIUS].gameObject.SetActive(false);
-					if (lastCurLayer + LayersToShow <= _curMaxLayer) {
-						var layerToShow = _layers[lastCurLayer + LayersToShow + RADIUS];
-						layerToShow.gameObject.SetActive(true);
-						SetSacleAndPos(layerToShow, directly: true);
+		
+			private void MoveForBackward(bool forward) {
+				var lastCurLayer = _curLayer;
+				if (forward) {
+					if (_curLayer + 1 <= _curMaxLayer) {
+						++_curLayer;
+						LayerDispear(_layers[lastCurLayer + RADIUS]);
+						if (lastCurLayer + LayersToShow <= _curMaxLayer) {
+							LayerEmerge(_layers[lastCurLayer + LayersToShow + RADIUS]);
+						}
+					}
+				} else {
+					if (_curLayer - 1 >= _curMinLayer) {
+						--_curLayer;
+						LayerEmerge(_layers[lastCurLayer - 1 + RADIUS]);
+						if (lastCurLayer + LayersToShow - 1 <= _curMaxLayer) {
+							LayerDispear(_layers[lastCurLayer + LayersToShow - 1 + RADIUS]);
+						}
 					}
 				}
-			} else {
-				if (_curLayer - 1 >= _curMinLayer) {
-					--_curLayer;
-					var layerToShow = _layers[lastCurLayer - 1 + RADIUS];
-					layerToShow.gameObject.SetActive(true);
-					SetSacleAndPos(layerToShow, directly: true);
-					if (lastCurLayer + LayersToShow - 1 <= _curMaxLayer) {
-						var layerToHide = _layers[lastCurLayer + LayersToShow - 1 + RADIUS];
-						layerToHide.gameObject.SetActive(false);
+				if (lastCurLayer != _curLayer)
+					for (int i = _curLayer; i <= _curMaxLayer; ++i) {
+						SetSacleAndPos(_layers[i + RADIUS]);
+						if (i - _curLayer + 1 == LayersToShow) 
+							break;
 					}
-				}
 			}
-			if (lastCurLayer != _curLayer)
-				for (int i = _curLayer; i <= _curMaxLayer; ++i) {
-					SetSacleAndPos(_layers[i + RADIUS]);
-					if (i - _curLayer + 1 == LayersToShow) 
-						break;
-				}
-		}
-
+		#endregion
 
 		#region Utilities
+
+			private void LayerEmerge(ILayer layer) {
+				layer.SetAlphaDirect(0f);
+				layer.gameObject.SetActive(true);
+				layer.SetAlpha(1f, () => layer.SetAlphaDirect(1f));
+				SetSacleAndPos(layer, directly: true);
+			}
+			private void LayerDispear(ILayer layer) {
+				layer.SetAlpha(0f, () => {
+					layer.gameObject.SetActive(false);
+					layer.SetAlphaDirect(1f);
+				});
+			}
 
 			private void SetSacleAndPos(ILayer layer, bool directly = false) {
 				float slope = Slope(layer.Layer);
@@ -150,7 +150,7 @@ namespace VisualLogic
 			/// 传入需要计算的Layer编号（比_curLayer大的）
 			/// </summary>
 			private float Slope(int n) {
-				return _slope[n - _curLayer];
+				return _slope[n - _curLayer + LAYER_MAX];
 			}
 
 		#endregion

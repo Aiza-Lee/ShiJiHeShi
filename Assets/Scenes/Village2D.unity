@@ -634,8 +634,8 @@ MonoBehaviour:
   m_LightType: 4
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Color: {r: 0.9308176, g: 0.5649301, b: 0.58841205, a: 1}
+  m_Intensity: 1.57
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
   m_ApplyToSortingLayers: c12dae98
@@ -803,7 +803,7 @@ MonoBehaviour:
   LayersToShow: 6
   _curLayer: 0
   _layers: []
-  _curMaxLayer: 0
+  _curMaxLayer: -1
   _curMinLayer: 0
 --- !u!114 &1624786264
 MonoBehaviour:
@@ -1068,9 +1068,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2122861842}
-  - component: {fileID: 2122861846}
   - component: {fileID: 2122861845}
-  - component: {fileID: 2122861847}
   - component: {fileID: 2122861841}
   - component: {fileID: 2122861840}
   - component: {fileID: 2122861843}
@@ -1241,69 +1239,9 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   CurveSpeed: 35
-  CameraSpeed: 10
+  CameraSpeed: 13
+  ForbidMoveTime: 0.25
   _CameraSize: 0
---- !u!114 &2122861846
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2122861839}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23f8c390eaabad94cbed9b0e1e41d842, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Layer: {fileID: 0}
---- !u!114 &2122861847
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2122861839}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af7bc40e9237945408d0214d774af232, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ChangePresets:
-  - SpeedCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: -0.0023683344
-        outSlope: -0.0023683344
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0.40277788
-      - serializedVersion: 3
-        time: 0.61999047
-        value: 0.4866836
-        inSlope: -2.3518927
-        outSlope: -2.3518927
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.15428814
-        outWeight: 0.1929782
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: -0.020289524
-        outSlope: -0.020289524
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.5409219
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    ChangeTime: 0.7
-    Integral: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

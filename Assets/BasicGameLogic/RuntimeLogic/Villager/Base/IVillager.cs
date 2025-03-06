@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using LogicUtilities;
+using NSFrame;
 using UnityEngine;
 
 namespace BasicLogic 
@@ -24,6 +26,36 @@ namespace BasicLogic
 		
 		public RepoList ConsBuffs => _consBuffs;
 		public RepoList ProdBuffs => _prodBuffs;
+
+		public SmoothMove SmoothMove { get; private set; }
+		public SmoothScale SmoothScale { get; private set; }
+
+
+		private ITask _curTask;
+
+		private void Awake() {
+			SmoothMove = GetComponent<SmoothMove>();
+			SmoothScale = GetComponent<SmoothScale>();
+		}
+
+		private void OnEnable() {
+			if (_curTask != null) {
+				EventSystem.AddListener((int)LogicEvent.Tick, _curTask.LogicUpdate);
+			}
+		}
+		private void OnDisable() {
+			if (_curTask != null) {
+				EventSystem.RemoveListener((int)LogicEvent.Tick, _curTask.LogicUpdate);
+			}
+		}
+
+		public void SetTask(ITask task) {
+			if (_curTask != null) {
+				EventSystem.RemoveListener((int)LogicEvent.Tick, _curTask.LogicUpdate);
+			}
+			_curTask = task;
+			EventSystem.AddListener((int)LogicEvent.Tick, _curTask.LogicUpdate);
+		}
 	}
 	
 	

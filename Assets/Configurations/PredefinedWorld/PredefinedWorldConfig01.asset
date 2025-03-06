@@ -99,7 +99,7 @@ MonoBehaviour:
     SavedRepositoryAmounts:
       RList:
       - RepositoryType: 0
-        Value: 1664409.1
+        Value: 0
       - RepositoryType: 1
         Value: 114514
       - RepositoryType: 2
