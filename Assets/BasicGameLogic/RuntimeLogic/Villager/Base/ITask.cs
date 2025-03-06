@@ -4,9 +4,21 @@ using UnityEngine.Events;
 
 namespace BasicLogic
 {
-	public interface ITask {
-		UnityAction Task { get; set; }
-		UnityAction OnTaskDown { get; set; }
-		List<NSPair<Repository, ulong>> Demands { get; set; }
+	public enum TaskType {
+		Work,
+		Sleep,
+		MoveTo,
+		Spare,
 	}
+	
+	public abstract class ITask {
+		public TaskType TaskType;
+		public IVillager AttachedVillager;
+
+		public void SetVillager(IVillager villager) => AttachedVillager = villager;
+
+		public abstract void LogicUpdate();
+		public abstract void OnTaskStart();
+		public abstract void OnTaskEnd();
+	} 
 }

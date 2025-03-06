@@ -52,20 +52,20 @@ namespace VisualLogic
 				_layers.Add(null); 
 		}
 		private void OnEnable() {
-			EventSystem.AddListener<ILayer>("LayerCTOR", OnLayerCreate);
-			EventSystem.AddListener<IArch>("CTOR", OnArchCreate);
-			EventSystem.AddListener<Vector3>("CM", OnCameraMove);
+			EventSystem.AddListener<ILayer>((int)LogicEvent.LayerConstructed_L, OnLayerCreate);
+			EventSystem.AddListener<IArch>((int)LogicEvent.ArchConstructed_A, OnArchCreate);
+			EventSystem.AddListener<Vector3>((int)LogicEvent.CameraMove_v3, OnCameraMove);
 		}
 		private void OnDisable() {
-			EventSystem.RemoveListener<ILayer>("LayerCTOR", OnLayerCreate);
-			EventSystem.RemoveListener<IArch>("CTOR", OnArchCreate);
-			EventSystem.RemoveListener<Vector3>("CM", OnCameraMove);
+			EventSystem.RemoveListener<ILayer>((int)LogicEvent.LayerConstructed_L, OnLayerCreate);
+			EventSystem.RemoveListener<IArch>((int)LogicEvent.ArchConstructed_A, OnArchCreate);
+			EventSystem.RemoveListener<Vector3>((int)LogicEvent.CameraMove_v3, OnCameraMove);
 		}
 
 		private void Update() {
 			if (!_cameraLastPos.IsApproximatelyEqual(LayerCamera.transform.position)) {
 				// OnCameraMove(movement);
-				EventSystem.Invoke<Vector3>("CM", LayerCamera.transform.position - _cameraLastPos);
+				EventSystem.Invoke<Vector3>((int)LogicEvent.CameraMove_v3, LayerCamera.transform.position - _cameraLastPos);
 				_cameraLastPos = LayerCamera.transform.position;
 			}
 			if (Input.GetKeyDown(KeyCode.W)) { MoveForBackward(forward: true); }
