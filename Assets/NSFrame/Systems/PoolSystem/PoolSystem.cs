@@ -70,7 +70,7 @@ namespace NSFrame {
 			return false;
 		}
 
-		public static void InitObjectPool<T>(int maxCapacity = -1) where T : class, new() {
+		public static void InitObjectPool<T>(int maxCapacity = -1) where T : class, IPooledObject, new() {
 			Type type = typeof(T);
 			if (_objectPoolDic.ContainsKey(type)) {
 				// Debug.LogError($"NS: Have areadily initialized the \"{type}\" Object Pool");
