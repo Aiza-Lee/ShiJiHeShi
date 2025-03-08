@@ -17,25 +17,45 @@ namespace NSFrame {
 		}
 
 		private interface IEventInfo { public void Destroy(); }
-		private class EventInfo : IEventInfo {
+		private class EventInfo : IEventInfo, IPooledObject {
 			public UnityAction handler;
 			public void Destroy() { handler = null; PoolSystem.PushObj(this); }
+
+			public void DestroyForPool() {}
+
+			public void InitForPool() {}
 		}
-		private class EventInfo<T> : IEventInfo {
+		private class EventInfo<T> : IEventInfo, IPooledObject {
 			public UnityAction<T> handler;
 			public void Destroy(){ handler = null; PoolSystem.PushObj(this); }
+
+			public void DestroyForPool() {}
+
+			public void InitForPool() {}
 		}
-		private class EventInfo<T1, T2> : IEventInfo {
+		private class EventInfo<T1, T2> : IEventInfo, IPooledObject {
 			public UnityAction<T1, T2> handler;
 			public void Destroy() { handler = null; PoolSystem.PushObj(this); }
+
+			public void DestroyForPool() {}
+
+			public void InitForPool() {}
 		}
-		private class EventInfo<T1, T2, T3> : IEventInfo {
+		private class EventInfo<T1, T2, T3> : IEventInfo, IPooledObject {
 			public UnityAction<T1, T2, T3> handler;
 			public void Destroy() { handler = null; PoolSystem.PushObj(this); }
+
+			public void DestroyForPool() {}
+
+			public void InitForPool() {}
 		}
-		private class EventInfo<T1, T2, T3, T4> : IEventInfo {
+		private class EventInfo<T1, T2, T3, T4> : IEventInfo, IPooledObject {
 			public UnityAction<T1, T2, T3, T4> handler;
 			public void Destroy() { handler = null; PoolSystem.PushObj(this); }
+
+			public void DestroyForPool() {}
+
+			public void InitForPool() {}
 		}
 		
 		public static void AddListener(int eventID, UnityAction action, EventType eventType = EventType.Default) {

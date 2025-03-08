@@ -16,8 +16,8 @@ namespace LogicUtilities
 		}
 
 		protected override void DealPosition() {
-			var changeData = ChangePresets[_curMod];
-			transform.Translate(_distance * (changeData.SpeedCurve.Evaluate(_elapsedTime / changeData.ChangeTime) * Time.deltaTime / (changeData.ChangeTime * changeData.Integral)));
+			var cgDt = ChangePresets[_curMod];
+			transform.Translate(_distance * (cgDt.SpeedCurve.Evaluate(_elapsedTime / cgDt.ChangeTime) * Time.deltaTime / (cgDt.ChangeTime * cgDt.Integral)));
 			_elapsedTime += Time.deltaTime;
 			if (transform.position.IsApproximatelyEqual(Target)) {
 				_updateAction = null;

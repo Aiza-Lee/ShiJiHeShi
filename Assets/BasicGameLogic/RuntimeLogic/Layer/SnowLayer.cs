@@ -1,4 +1,4 @@
 namespace BasicLogic
 {
-	public class SnowLayer : ILayer {}
+	public class SnowLayer : LayerBase {}
 }

@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Security;
-using UnityEditor.ShaderKeywordFilter;
+using UnityEngine;
 
 namespace BasicLogic
 {
@@ -24,12 +23,34 @@ namespace BasicLogic
 			return res;
 		}
 
-		public static List<RepoList> ToFullFill(this List<RepoList> obj) {
-			var res = new List<RepoList>();
-			foreach (var repoList in obj) {
-				res.Add(new(repoList));
+		public static GameObject InstantiateWithNewMaterial(GameObject prefab, Transform father) {
+			var go  = GameObject.Instantiate(prefab, father);
+			if (go.TryGetComponent<SpriteRenderer>(out var renderer)) {
+				renderer.material = new Material(renderer.material);
 			}
-			return res;
+			return go;
+		}
+
+		public static List<JTPair<int>> ConvertToFull(this List<JTPair<int>> obj) {
+			if (obj.Count == GameManager.JobSize) {
+				return obj;
+			}
+			var ori = obj;
+			obj = new List<JTPair<int>>();
+			for (int i = 0; i < GameManager.JobSize; ++i) {
+				obj.Add(new((JobType)i, 0));
+			}
+			foreach (var jtpair in ori) {
+				obj[jtpair.JobInt].Value = jtpair.Value;
+			}
+			return obj;
+		}
+
+		public static bool IsEven(this int value) {
+			return value % 2 == 0;
+		}
+		public static bool IsOdd(this int value) {
+			return !value.IsEven();
 		}
 	}
 }

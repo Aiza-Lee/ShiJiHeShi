@@ -7,32 +7,19 @@ namespace BasicLogic
 		public List<RTPair<float>> RList;
 		public int Count => RList.Count;
 
-		public bool Full { get; private set; }
+		[HideInInspector] public bool Full;
 
-		public RepoList(bool fillAll = false) {
-			RList = new();
-			if (fillAll) {
-				Full = true;
-				for (int i = 0; i < GameManager.RepositorySize; ++i) 
-					RList.Add(new((Repository)i, 0));
+		#region Constructor
+			public RepoList(bool fillAll = false) {
+				RList = new();
+				if (fillAll) {
+					Full = true;
+					for (int i = 0; i < GameManager.RepositorySize; ++i) 
+						RList.Add(new((Repository)i, 0));
+				}
 			}
-		}
-		/// <summary>
-		/// 从不完整的RepoList中创建完整的RepoList
-		/// </summary>
-		public RepoList(RepoList other) {
-			RList = new();
-			if (other.Full) {
-				for (int i = 0; i < GameManager.RepositorySize; ++i) RList.Add(other[i]);
-				return;
-			}
-			Full = true;
-			for (int i = 0; i < GameManager.RepositorySize; ++i) 
-				RList.Add(new((Repository)i, 0));
-			for (int i = 0; i < other.RList.Count; ++i) {
-				Add(other.RList[i]);
-			}
-		}
+		#endregion
+
 		public RTPair<float> this[int index] {
 			get {
 				if (!Full) {
@@ -42,59 +29,70 @@ namespace BasicLogic
 			}
 			set => RList[index] = value;
 		}
-		public RepoList Add(Repository repository, float val) {
-			foreach(var rtpair in RList) {
-				if (rtpair.RepositoryType == repository) {
-					rtpair.Value += val;
-					return this;
-				}
+
+		public RepoList ConvertToFull() {
+			if (Full) { return this; }
+			Full = true;
+			var ori = RList;
+			RList = new();
+			for (int i = 0; i < GameManager.RepositorySize; ++i) {
+				RList.Add(new((Repository)i, 0f));
 			}
-			RList.Add(new(repository, val));
+			if (ori != null) foreach (var rtPair in ori) {
+				RList[rtPair.RepoInt].Value = rtPair.Value;
+			}
 			return this;
 		}
-		public RepoList Add(RTPair<float> rtPair) {
-			return Add(rtPair.RepositoryType, rtPair.Value);
-		}
 	}
+
 	[System.Serializable] public class JobList {
-		public List<JTPair<float>> List;
-		public int Count => List.Count;
+		public List<JTPair<float>> JList;
+		public int Count => JList.Count;
 
-		public bool Full { get; private set; }
+		[HideInInspector] public bool Full;
 
-		public JobList(bool fillAll = false) {
-			List = new();
-			if (fillAll) {
+		#region Constructor
+			public JobList(bool fillAll = false) {
+				JList = new();
 				Full = true;
-				for (int i = 0; i < GameManager.RepositorySize; ++i) 
-					List.Add(new((Job)i, 0));
+				if (fillAll) {
+					for (int i = 0; i < GameManager.JobSize; ++i) 
+						JList.Add(new((JobType)i, 0));
+				}
 			}
-		}
+		#endregion
+
 		public JTPair<float> this[int index] {
 			get {
 				if (!Full) {
 					Debug.LogWarning("Donnot use index when list is not full.");
 				}
-				return List[index];
+				return JList[index];
 			}
-			set => List[index] = value;
+			set => JList[index] = value;
 		}
-		public JobList Add(Job job, float val) {
-			foreach(var jtPair in List) {
-				if (jtPair.Job == job) {
-					jtPair.Value += val;
-					return this;
-				}
+
+		public JobList ConvertToFull() {
+			if (Full) { return this; }
+			Full = true;
+			var ori = JList;
+			JList = new();
+			for (int i = 0; i < GameManager.JobSize; ++i) {
+				JList.Add(new((JobType)i, 0f));
 			}
-			List.Add(new(job, val));
+			if (ori != null) foreach (var jtPair in ori) {
+				JList[jtPair.JobInt].Value = jtPair.Value;
+			}
 			return this;
 		}
+
 	}
+
 	[System.Serializable] public class JTPair<T> {
-		public Job Job;
+		public JobType Job;
 		public T Value;
 		public int JobInt => (int)Job;
-		public JTPair(Job job, T t) {
+		public JTPair(JobType job, T t) {
 			Job = job;
 			Value = t;
 		}
@@ -120,21 +118,5 @@ namespace BasicLogic
 			Key = key;
 			Value = value;
 		}
-	}
-
-	/// <summary>
-	/// Level(int) -> T
-	/// </summary>
-	[System.Serializable] public class LTPair<T> {
-		public int Level;
-		public T Value;
-	}
-
-	/// <summary>
-	/// Level(int) -> string
-	/// </summary>
-	[System.Serializable] public class LStringPair {
-		public int Level;
-		[TextArea(2, 20)] public string Value;
 	}
 }

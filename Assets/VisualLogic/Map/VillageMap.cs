@@ -13,14 +13,14 @@ namespace BasicLogic
 		[Tooltip("单元格边长")] public float CellSize;
 
 		[Header("Information")]
-		[SerializeField] private List<IArch> _map;
+		[SerializeField] private List<ArchBase> _map;
 		[SerializeField] private int _maxLayer, _minLayer, _maxOrder, _minOrder;
 
 		VillageMap() {
 			_map = new();
 		}
 
-		public void AddToMap(IArch arch) {
+		public void AddToMap(ArchBase arch) {
 			_map.Add(arch);
 			_maxLayer = Mathf.Max(_maxLayer, arch.Layer);
 			_minLayer = Mathf.Min(_minLayer, arch.Layer);

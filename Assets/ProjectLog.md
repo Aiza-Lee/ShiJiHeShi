@@ -25,8 +25,11 @@
 * 详见 `LogicEvent` 枚举
 
 ## Todo
-* 灯光放缩问题
+* 村民move没生效
 * 村民任务系统
+* 在相机视角缩放的时候重新计算slope，或许可以根据相机的缓存缩放比例预处理为多组slope数据
+* 地图边缘
+* 灯光放缩问题
 * 多存档，回档问题
   * 直接改在框架上
 
@@ -34,7 +37,11 @@
 ## Todo2
 * 研究一下发光贴图，用这个方法解决Light不受Scale影响的问题
   * Solution: 类似于 _MainTex 和 _BaseMap，在 sprite Editor 中添加次级纹理
+* 寻路问题
+  * Solution: 目前找到单一路径的简单写法，应该不会有什么问题，但是期望可以将路径随机化一下
 
+## Final Todo
+* 检查 代码中的 todo test throw
 
 ## 2025/2/21
 

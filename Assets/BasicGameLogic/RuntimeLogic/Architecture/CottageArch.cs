@@ -1,4 +1,4 @@
 namespace BasicLogic 
 {
-	public class CottageArch : IArch {}
+	public class CottageArch : ArchBase {}
 }

@@ -15,91 +15,111 @@ MonoBehaviour:
   PresetName: "\u6D4B\u8BD5\u4E16\u754C\u914D\u7F6E01"
   GameSaveData:
     SavedLayers:
-    - ID: 
-      LayerType: 0
-      Layer: -1
-      InLayerArches:
-      - ID: 
-        Layer: -1
-        Order: 0
-        Level: 0
-        ArchType: 0
-      - ID: 
-        Layer: -1
-        Order: 1
-        Level: 0
-        ArchType: 0
-    - ID: 
-      LayerType: 0
+    - LayerType: 0
       Layer: 0
-      InLayerArches:
-      - ID: 
-        Layer: 0
-        Order: -1
-        Level: 0
-        ArchType: 0
-      - ID: 
-        Layer: 0
-        Order: -2
-        Level: 0
-        ArchType: 0
-      - ID: 
-        Layer: 0
-        Order: -3
-        Level: 0
-        ArchType: 0
-      - ID: 
-        Layer: 0
-        Order: 1
-        Level: 0
-        ArchType: 0
-    - ID: 
-      LayerType: 1
+    - LayerType: 1
       Layer: 1
-      InLayerArches:
-      - ID: 
-        Layer: 1
-        Order: 3
-        Level: 0
-        ArchType: 0
-      - ID: 
-        Layer: 1
-        Order: 4
-        Level: 0
-        ArchType: 0
-    - ID: 
-      LayerType: 0
+    - LayerType: 0
       Layer: 2
-      InLayerArches:
-      - ID: 
-        Layer: 2
-        Order: 3
-        Level: 0
-        ArchType: 0
-      - ID: 
-        Layer: 2
-        Order: -1
-        Level: 0
-        ArchType: 0
-    - ID: 
-      LayerType: 1
+    - LayerType: 1
       Layer: 3
-      InLayerArches:
-      - ID: 
-        Layer: 3
-        Order: -2
-        Level: 0
-        ArchType: 0
-      - ID: 
-        Layer: 3
-        Order: -4
-        Level: 0
-        ArchType: 0
-    SavedVillagers: []
+    SavedVillagers:
+    - ID: 114514
+      FirstName: Human
+      LastName: B
+      JobLevel: []
+      JobExperiences:
+        JList:
+        - Job: 0
+          Value: 0
+        - Job: 1
+          Value: 0
+        Full: 1
+      ConsumeBuffs:
+        RList:
+        - RepositoryType: 0
+          Value: 0
+        - RepositoryType: 1
+          Value: 0
+        - RepositoryType: 2
+          Value: 0
+        - RepositoryType: 3
+          Value: 0
+        - RepositoryType: 4
+          Value: 0
+        - RepositoryType: 5
+          Value: 0
+        - RepositoryType: 6
+          Value: 0
+        Full: 1
+      ProduceBuffs:
+        RList:
+        - RepositoryType: 0
+          Value: 0
+        - RepositoryType: 1
+          Value: 0
+        - RepositoryType: 2
+          Value: 0
+        - RepositoryType: 3
+          Value: 0
+        - RepositoryType: 4
+          Value: 0
+        - RepositoryType: 5
+          Value: 0
+        - RepositoryType: 6
+          Value: 0
+        Full: 1
+      Position:
+        Layer: 0
+        Coord: 0
+      TaskRunnerData:
+        Working: 0
+        Tasks: []
+    SavedArchs:
+    - ArchType: 0
+      ID: 114514
+      Layer: 0
+      Order: 0
+      Level: 0
+      ProdBuffs:
+        RList:
+        - RepositoryType: 0
+          Value: 0
+        - RepositoryType: 1
+          Value: 0
+        - RepositoryType: 2
+          Value: 0
+        - RepositoryType: 3
+          Value: 0
+        - RepositoryType: 4
+          Value: 0
+        - RepositoryType: 5
+          Value: 0
+        - RepositoryType: 6
+          Value: 0
+        Full: 1
+      ConsBuffs:
+        RList:
+        - RepositoryType: 0
+          Value: 0
+        - RepositoryType: 1
+          Value: 0
+        - RepositoryType: 2
+          Value: 0
+        - RepositoryType: 3
+          Value: 0
+        - RepositoryType: 4
+          Value: 0
+        - RepositoryType: 5
+          Value: 0
+        - RepositoryType: 6
+          Value: 0
+        Full: 1
+      InArchVillIDs: []
     SavedRepositoryAmounts:
       RList:
       - RepositoryType: 0
-        Value: 0
+        Value: 18553.637
       - RepositoryType: 1
         Value: 114514
       - RepositoryType: 2
@@ -112,3 +132,4 @@ MonoBehaviour:
         Value: 114514
       - RepositoryType: 6
         Value: 114514
+      Full: 1

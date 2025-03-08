@@ -9,11 +9,12 @@ namespace LogicUtilities
 	/// </summary>
 	public class SmoothFade : ISmoothChange<float>
 	{
-		private Material _material = null;
+		public SpriteRenderer Renderer { get; private set; }
+		private Material _material => Renderer.material;
 		private string _valueName = "_Alpha";
 
-		public void Init(Material material) {
-			_material = material;
+		private void Start() {
+			Renderer = GetComponent<SpriteRenderer>();
 		}
 
 		public override void DirectlySet(float value) {
@@ -25,8 +26,8 @@ namespace LogicUtilities
 		}
 
 		protected override void DealPosition() {
-			var changeData = ChangePresets[_curMod];
-			_material.SetFloat(_valueName, Mathf.Clamp01(_material.GetFloat(_valueName) + _distance * (changeData.SpeedCurve.Evaluate(_elapsedTime / changeData.ChangeTime) * Time.deltaTime / (changeData.ChangeTime * changeData.Integral))));
+			var cgDt = ChangePresets[_curMod];
+			_material.SetFloat(_valueName, Mathf.Clamp01(_material.GetFloat(_valueName) + _distance * (cgDt.SpeedCurve.Evaluate(_elapsedTime / cgDt.ChangeTime) * Time.deltaTime / (cgDt.ChangeTime * cgDt.Integral))));
 			_elapsedTime += Time.deltaTime;
 			if (_material.GetFloat(_valueName).IsApproximatelyEqual(Target)) {
 				_updateAction = null;

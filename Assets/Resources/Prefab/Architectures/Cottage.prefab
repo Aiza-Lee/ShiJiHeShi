@@ -96,7 +96,7 @@ MonoBehaviour:
     Level: 0
     ArchType: 0
   _insideVillagers: []
-  _prodBuffs:
+  _prodBuffs_F:
     RList:
     - RepositoryType: 0
       Value: 0
@@ -112,7 +112,8 @@ MonoBehaviour:
       Value: 0
     - RepositoryType: 6
       Value: 0
-  _consBuffs:
+    Full: 1
+  _consBuffs_F:
     RList:
     - RepositoryType: 0
       Value: 0
@@ -128,6 +129,7 @@ MonoBehaviour:
       Value: 0
     - RepositoryType: 6
       Value: 0
+    Full: 1
 --- !u!212 &2273045342668823788
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -170,7 +172,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1127655577
   m_SortingLayer: 22
-  m_SortingOrder: -1
+  m_SortingOrder: -2
   m_Sprite: {fileID: -653725397457098092, guid: 031ce11ba9e9ed7489366888532068bc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -208,7 +210,7 @@ Transform:
   m_GameObject: {fileID: 5222953922506104471}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

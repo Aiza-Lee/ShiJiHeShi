@@ -20,7 +20,13 @@ MonoBehaviour:
     Value: {fileID: 6027108390514112321, guid: 5878d12087484da4c90322c23862563f, type: 3}
   - Key: 1
     Value: {fileID: 2011307254257003627, guid: 17fffa9b5b4cf5b4bb28692bac405adf, type: 3}
-  VillagerPrefabs: []
+  VillagerPrefabs:
+  - {fileID: 4632101640204001798, guid: 24391db0aa8924c499e4fc301893c2c6, type: 3}
+  JobConfigs:
+  - Key: 0
+    Value: {fileID: 11400000, guid: b9ca2d31f3f136141bdb535a649c8940, type: 2}
+  - Key: 1
+    Value: {fileID: 0}
   TicksOfDay: 500
   TicksOfNight: 200
   MaxContainPerLayer: 50

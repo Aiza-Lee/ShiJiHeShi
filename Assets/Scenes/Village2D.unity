@@ -352,7 +352,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TickTime: 0.01
-  Speed: 1
+  _speed: 1
   Pause: 1
   _TickSum: 0
   _TimeSum: 0
@@ -386,7 +386,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _amounts:
     RList: []
-  _globalConsBuffs:
+    Full: 0
+  _globalConsBuffs_F:
     RList:
     - RepositoryType: 0
       Value: 0
@@ -402,7 +403,8 @@ MonoBehaviour:
       Value: 0
     - RepositoryType: 6
       Value: 0
-  _globalProdBuffs:
+    Full: 1
+  _globalProdBuffs_F:
     RList:
     - RepositoryType: 0
       Value: 0
@@ -418,6 +420,7 @@ MonoBehaviour:
       Value: 0
     - RepositoryType: 6
       Value: 0
+    Full: 1
 --- !u!114 &866257816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -817,7 +820,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01ed9382253e81b4780b5c03e1eb1b4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BackgroundCamera: {fileID: 0}
+  BackgroundCamera: {fileID: 176953531}
   Backgrounds:
   - {fileID: 1302074699}
   MoveVelocities:

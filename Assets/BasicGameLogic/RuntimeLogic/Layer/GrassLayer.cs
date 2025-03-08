@@ -1,4 +1,4 @@
 namespace BasicLogic
 {
-	public class GrassLayer : ILayer {}
+	public class GrassLayer : LayerBase {}
 }

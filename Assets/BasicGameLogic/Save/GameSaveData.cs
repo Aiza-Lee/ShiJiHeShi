@@ -8,13 +8,15 @@ namespace BasicLogic
 	/// </summary>
 	[Serializable]
 	public class GameSaveData {
-		public List<LayerSaveData> SavedLayers;
-		public List<VillagerSaveData> SavedVillagers;
+		public List<LayerDataBase> SavedLayers;
+		public List<VillData> SavedVillagers;
+		public List<ArchDataBase> SavedArchs;
 		public RepoList SavedRepositoryAmounts;
 
 		public GameSaveData() {
 			SavedLayers = new();
 			SavedVillagers = new();
+			SavedArchs = new();
 			SavedRepositoryAmounts = new(fillAll: true);
 		}
 	}
